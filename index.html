@@ -1,113 +1,1893 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Gadget Hunter BD - Advanced</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-scroll-behavior:smooth;
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Baloo+Da+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f172a;
+  --navy-2:#1e293b;
+  --rose:#e11d48;
+  --rose-dark:#be123c;
+  --amber:#f59e0b;
+  --bg:#eef1f6;
+  --card:#ffffff;
+  --line:#e6eaf0;
+  --muted:#64748b;
+  --wa:#25D366;
+  --mg:#0084FF;
+  --radius:16px;
+  --font-ui: 'Hind Siliguri', sans-serif;
+  --font-display: 'Baloo Da 2', 'Hind Siliguri', sans-serif;
 }
-
-body{
-background:#f5f7fb;
-overflow-x:hidden;
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--font-ui)}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+#app{height:100vh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;position:relative;background:var(--bg)}
+#app-inner{padding:10px 10px 90px;max-width:520px;margin:0 auto;color:var(--navy)}
+@media(min-width:600px){#app-inner{max-width:760px}}
+html.no-scroll #app,body.no-scroll #app{overflow:hidden !important}
+::-webkit-scrollbar{display:none}
+*{scrollbar-width:none}
+.cat-scroll,.banner-track,.cart-items,.popup{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
 }
-<header class="header">
+:focus-visible{outline:2.5px solid var(--amber);outline-offset:2px}
 
-<div class="logo">
+/* ---------- HEADER ---------- */
+.top{background:var(--navy);color:#fff;padding:14px 14px;border-radius:18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;position:relative;overflow:hidden;transition:padding .25s ease}
+.top.compact{padding:8px 14px}
+.top::after{content:"";position:absolute;right:-40px;top:-40px;width:130px;height:130px;background:radial-gradient(circle,rgba(245,158,11,.35),transparent 70%)}
+.top-left{position:relative;z-index:1}
+.top-left h1{font-family:var(--font-display);font-size:21px;font-weight:800;letter-spacing:.2px;transition:font-size .25s ease}
+.top.compact .top-left h1{font-size:17px}
+.top-left p{font-size:9.5px;color:var(--amber);font-weight:700;margin-top:2px;transition:.2s}
+.top.compact .top-left p{max-height:0;opacity:0;margin-top:0;overflow:hidden}
+.top-right{display:flex;gap:10px;align-items:center;position:relative;z-index:1}
+.icon-btn{width:42px;height:42px;background:rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;border:2px solid rgba(255,255,255,.15)}
+.icon-btn svg{width:20px;height:20px;fill:#fff;pointer-events:none}
+.badge-count{position:absolute;top:-4px;right:-4px;background:var(--rose);color:#fff;font-size:9px;font-weight:800;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--navy)}
+.profile-icon{width:42px;height:42px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #fff}
+.profile-icon svg{width:22px;height:22px;fill:var(--navy);pointer-events:none}
 
-<img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+/* ---------- SEARCH ---------- */
+.search-wrap{background:var(--card);border-radius:14px;padding:5px;margin-bottom:10px;display:flex;align-items:center;gap:8px;border:1px solid var(--line);position:sticky;top:0;z-index:60}
+.search-wrap svg{width:18px;height:18px;fill:var(--muted);margin-left:8px;flex-shrink:0}
+.search-wrap input{border:none;outline:none;flex:1;padding:9px 4px;font-size:13.5px;background:transparent}
+.search-clear{width:26px;height:26px;border-radius:50%;background:var(--bg);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--muted);margin-right:4px;flex-shrink:0}
 
-<div>
+/* ---------- BANNER CAROUSEL ---------- */
+.banner-wrap{position:relative;margin-bottom:10px}
+.banner-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:16px;gap:0}
+.banner-slide{min-width:100%;scroll-snap-align:start;border-radius:16px;padding:18px 16px;color:#fff;position:relative;overflow:hidden;min-height:100px;display:flex;flex-direction:column;justify-content:center}
+.banner-slide.s1{background:linear-gradient(120deg,var(--rose),#9f1239)}
+.banner-slide.s2{background:linear-gradient(120deg,var(--navy),#334155)}
+.banner-slide.s3{background:linear-gradient(120deg,var(--amber),#b45309)}
+.banner-slide h2{font-family:var(--font-display);font-size:18px;font-weight:800}
+.banner-slide p{font-size:11.5px;margin-top:4px;opacity:.9}
+.banner-slide .flash-timer{margin-top:8px;display:inline-flex;gap:5px;font-weight:800;font-size:12px;background:rgba(0,0,0,.25);padding:5px 9px;border-radius:8px;width:fit-content}
+.banner-dots{display:flex;justify-content:center;gap:5px;margin-top:7px}
+.banner-dots span{width:6px;height:6px;border-radius:50%;background:#cbd5e1;transition:.25s}
+.banner-dots span.active{background:var(--rose);width:16px;border-radius:4px}
 
-<h2>Gadget Hunter BD</h2>
+/* ---------- STATS ---------- */
+.stats3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:var(--card);padding:16px 8px;border-radius:14px;margin-bottom:10px;text-align:center;border:1px solid var(--line)}
+.stats3 b{font-size:22px;color:var(--navy);display:block;font-weight:800;font-family:var(--font-display)}
+.stats3 small{font-size:10px;color:var(--muted)}
 
-<p>Premium Gadget Store</p>
+/* ---------- CATEGORIES ---------- */
+.cat-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin-bottom:10px}
+.cat-chip{flex-shrink:0;background:var(--card);border:1.5px solid var(--line);padding:8px 14px;border-radius:999px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--navy);white-space:nowrap;transition:.15s}
+.cat-chip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
 
+/* ---------- SORT / RESULT BAR ---------- */
+.sort-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 2px;gap:8px;flex-wrap:wrap}
+.sort-bar span{font-size:12px;color:var(--muted);font-weight:600}
+.sort-bar select{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 10px;font-size:12px;font-weight:700;color:var(--navy)}
+.reset-filters{font-size:11.5px;font-weight:700;color:var(--rose);background:#fff1f2;border:1px solid #fecdd3;border-radius:8px;padding:6px 10px;cursor:pointer;display:none}
+
+/* ---------- GRID / CARD ---------- */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.card{background:var(--card);border-radius:16px;border:1px solid var(--line);position:relative;display:flex;flex-direction:column;overflow:visible;animation:cardIn .35s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card>.img-wrap,.card>img{border-radius:16px 16px 0 0;overflow:hidden}
+.offer-badge{position:absolute;top:8px;left:8px;background:var(--rose);color:#fff;font-size:10px;font-weight:800;padding:4px 7px;border-radius:7px;z-index:5}
+.wish-btn{position:absolute;top:6px;right:6px;width:30px;height:30px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:5;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.12);border:none}
+.wish-btn svg{width:16px;height:16px;fill:none;stroke:#94a3b8;stroke-width:2}
+.wish-btn.active svg{fill:var(--rose);stroke:var(--rose)}
+.img-wrap{cursor:pointer;background:#f8fafc;position:relative}
+.img-wrap.loading::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f1f5f9 25%,#e8edf3 37%,#f1f5f9 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+.card img{width:100%;height:140px;object-fit:contain;padding:10px;background:#fff;display:block;position:relative;z-index:1}
+.info{padding:10px 10px 8px;display:flex;flex-direction:column;flex:1}
+.title{font-size:12.8px;font-weight:700;height:33px;overflow:hidden;line-height:16.5px;cursor:pointer}
+.meta-row{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:10.5px;color:var(--muted)}
+.meta-row .star{color:var(--amber);font-weight:800}
+.price{margin:5px 0 7px;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+.price b{color:var(--rose);font-size:14.5px}
+.price s{color:#94a3b8;font-size:10.5px}
+.card-actions{display:flex;gap:6px;margin-top:auto}
+.btn-cart{width:38px;height:36px;flex-shrink:0;background:var(--bg);border:1px solid var(--line);border-radius:9px;font-size:15px;cursor:pointer}
+.btn-order{flex:1;background:var(--navy);color:#fff;border:none;padding:0 4px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;height:36px}
+
+.load-more{display:block;margin:14px auto 4px;background:var(--card);border:1.5px solid var(--navy);color:var(--navy);padding:11px 26px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer}
+.empty-state{grid-column:1/-1;text-align:center;padding:40px 10px;color:var(--muted)}
+.empty-state div{font-size:34px;margin-bottom:8px}
+.empty-state button{margin-top:10px;background:var(--navy);color:#fff;border:none;padding:9px 18px;border-radius:9px;font-weight:800;font-size:12.5px;cursor:pointer}
+
+/* ---------- PRODUCT DETAIL POPUP ---------- */
+.popup-overlay{
+  position:absolute;
+  left:0;right:0;
+  background:rgba(15,23,42,.55);
+  z-index:200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.popup-overlay.show{display:flex}
+.popup{background:#fff;width:100%;max-width:480px;border-radius:20px;max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:14px 16px 16px;position:relative}
+.popup.pop-anim{animation:popZoom .32s cubic-bezier(.175,.885,.32,1.275) forwards}
+@keyframes popZoom{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes popZoomOut{from{transform:scale(1);opacity:1}to{transform:scale(0.4);opacity:0}}
+.popup .close{position:absolute;top:12px;right:14px;background:var(--bg);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:bold;z-index:2}
+.popup img{width:100%;height:210px;object-fit:contain;background:#f8fafc;border-radius:14px}
+.popup h3{font-size:16px;margin-top:12px;font-weight:800;padding-right:30px}
+.popup .meta-row{margin-top:4px;font-size:12px}
+.popup .price{margin:8px 0}
+.popup .price b{font-size:20px}
+.popup .price s{font-size:12px}
+.details{background:#f8fafc;padding:12px 13px;border-radius:12px;margin:10px 0;font-size:13px;line-height:23px;border:1px solid #eef2f7}
+.qty-row{display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border-radius:10px;padding:10px 12px;margin:10px 0;border:1px solid #eef2f7}
+.qty-row b{font-size:13px}
+.qty-ctrl{display:flex;align-items:center;gap:12px}
+.qty-ctrl button{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--navy);background:#fff;font-weight:800;cursor:pointer;font-size:14px}
+.qty-ctrl span{font-weight:800;min-width:16px;text-align:center}
+.popup-actions{display:flex;gap:8px;margin-top:8px}
+.btn-add-cart{flex:1;background:var(--bg);border:1.5px solid var(--navy);color:var(--navy);padding:12px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer}
+.wa{background:var(--wa);color:#fff;padding:12px 8px;border-radius:10px;text-align:center;text-decoration:none;font-weight:800;display:block;border:none;cursor:pointer;font-size:13px;flex:1}
+.mg{background:var(--mg);color:#fff;padding:12px 8px;border-radius:10px;text-align:center;text-decoration:none;font-weight:800;display:block;border:none;cursor:pointer;font-size:13px;flex:1}
+.order-btns{display:flex;gap:8px;margin-top:8px}
+
+/* ---------- CART DRAWER ---------- */
+.cart-overlay{position:absolute;left:0;right:0;background:rgba(15,23,42,.6);z-index:300;display:none}
+.cart-overlay.show{display:block}
+.cart-drawer{position:absolute;right:0;width:88%;max-width:400px;background:#fff;z-index:301;transform:translateX(100%);transition:transform .28s ease;display:flex;flex-direction:column}
+.cart-drawer.show{transform:translateX(0)}
+.cart-head{background:var(--navy);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.cart-items{flex:1;overflow-y:auto;padding:10px 14px}
+.cart-item{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.cart-item img{width:58px;height:58px;object-fit:contain;background:#f8fafc;border-radius:8px;border:1px solid var(--line)}
+.cart-item .ci-title{font-size:12.5px;font-weight:700;line-height:16px;height:32px;overflow:hidden}
+.cart-item .ci-price{color:var(--rose);font-weight:800;font-size:13px;margin-top:3px}
+.cart-item .ci-qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.cart-item .ci-qty button{width:22px;height:22px;border-radius:50%;border:1px solid var(--navy);background:#fff;font-weight:800;cursor:pointer;font-size:12px;line-height:1}
+.cart-item .ci-remove{margin-left:auto;color:var(--rose);font-size:11px;font-weight:700;cursor:pointer;align-self:flex-start}
+.cart-empty{text-align:center;padding:50px 10px;color:var(--muted)}
+.cart-empty div{font-size:38px;margin-bottom:10px}
+.cart-foot{padding:14px;border-top:1px solid var(--line)}
+.cart-total-row{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px;color:var(--muted);font-weight:600}
+.cart-total-row.grand{font-size:14px;font-weight:800;color:var(--navy);margin-top:6px;padding-top:8px;border-top:1px dashed var(--line)}
+.cart-total-row b{color:var(--rose);font-size:17px}
+.delivery-toggle{display:flex;gap:6px;margin:8px 0}
+.delivery-toggle button{flex:1;padding:8px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-size:11.5px;font-weight:700;cursor:pointer;color:var(--navy)}
+.delivery-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ---------- SUPPORT / FOOTER ---------- */
+.support-section{background:var(--card);border-radius:16px;padding:14px;margin-top:14px;border:1px solid var(--line);text-align:center}
+.footer{background:var(--navy);color:#fff;text-align:center;padding:18px;border-radius:16px;margin-top:16px;font-size:12px}
+.footer span{color:var(--amber)}
+
+/* ---------- PROFILE ---------- */
+#profileBox{position:absolute;left:0;right:0;background:var(--bg);z-index:9999;padding:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;display:none}
+#profileBox *{touch-action:pan-y !important}
+.p-header{background:var(--navy);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;border-radius:14px;margin-bottom:10px;max-width:520px;margin-left:auto;margin-right:auto}
+.p-card{background:#fff;margin:10px auto;width:100%;max-width:520px;border-radius:14px;padding:14px;border:1px solid var(--line)}
+.p-input{width:100%;padding:12px;margin-top:8px;border:1px solid #ddd;border-radius:9px;font-size:14px}
+.p-input.err{border-color:var(--rose)}
+.p-err-msg{color:var(--rose);font-size:11px;margin-top:4px;display:none}
+.p-grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.p-stat{background:var(--bg);padding:10px;border-radius:9px;text-align:center;border:1px solid #eef2f7}
+.p-stat b{display:block;font-size:18px;font-family:var(--font-display)}
+.p-btn{width:100%;background:var(--navy);color:#fff;padding:13px;border-radius:11px;margin-top:12px;font-weight:800;border:none;cursor:pointer}
+.p-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bg);font-size:13px}
+
+/* ---------- BOTTOM NAV ---------- */
+.bottom-nav{position:absolute;left:0;right:0;background:#fff;display:flex;justify-content:space-around;align-items:center;padding:8px 4px 10px;border-top:1px solid var(--line);z-index:150;box-shadow:0 -4px 14px rgba(0,0,0,.07)}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;background:none;border:none;color:var(--muted);font-size:9.5px;font-weight:700;position:relative;padding:4px 8px}
+.nav-btn svg{width:21px;height:21px;fill:none;stroke:var(--muted);stroke-width:2}
+.nav-btn.active{color:var(--navy)}
+.nav-btn.active svg{stroke:var(--navy);fill:rgba(15,23,42,.06)}
+.nav-badge{position:absolute;top:-2px;right:2px;background:var(--rose);color:#fff;font-size:8.5px;font-weight:800;min-width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 2px}
+
+/* ---------- SCROLL TO TOP ---------- */
+.to-top{position:absolute;width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;border:none;font-size:17px;box-shadow:0 6px 16px rgba(0,0,0,.25);cursor:pointer;z-index:140;display:none;align-items:center;justify-content:center}
+.to-top.show{display:flex}
+
+/* ---------- TOAST ---------- */
+#toastBox{position:absolute;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:6px;align-items:center;width:90%;max-width:400px}
+.toast{background:var(--navy);color:#fff;padding:11px 18px;border-radius:10px;font-size:12.5px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;transform:translateY(10px);animation:toastIn .25s forwards, toastOut .25s forwards 2.2s}
+@keyframes toastIn{to{opacity:1;transform:translateY(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-6px)}}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="app-inner">
+
+<div class="top" id="topHeader">
+  <div class="top-left">
+    <h1>Gadget Hunter BD</h1>
+    <p>১০০% বিশ্বস্ত ই-কমার্স প্লাটফর্ম</p>
+  </div>
+  <div class="top-right">
+    <div class="icon-btn" onclick="openCart()" role="button" tabindex="0" aria-label="কার্ট দেখুন">
+      <svg viewBox="0 0 24 24"><path d="M7 4h-2l-1 2v2h2l3.6 7.59-1.35 2.44c-.16.28-.25.61-.25.97 0 1.1.9 2 2 2h12v-2h-11.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1h-14.19l-.94-2zm2 14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+      <span class="badge-count" id="cartBadge" style="display:none">0</span>
+    </div>
+    <div class="icon-btn" onclick="openWishTab()" role="button" tabindex="0" aria-label="ইচ্ছেতালিকা দেখুন">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.87-10-9.28C.36 8.6 1.9 5 5.4 5c2 0 3.4 1.1 4.6 2.7C11.2 6.1 12.6 5 14.6 5c3.5 0 5.04 3.6 3.4 6.72C19.5 16.13 12 21 12 21z"/></svg>
+      <span class="badge-count" id="wishBadge" style="display:none">0</span>
+    </div>
+    <div class="profile-icon" onclick="openProfile()" role="button" tabindex="0" aria-label="প্রোফাইল খুলুন"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+  </div>
 </div>
 
+<div class="search-wrap">
+  <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  <input id="searchInput" placeholder="পণ্যের নাম লিখে খুঁজুন..." oninput="onSearch()" aria-label="পণ্য খুঁজুন">
+  <div class="search-clear" id="searchClear" onclick="clearSearch()" role="button" aria-label="সার্চ মুছুন">✕</div>
 </div>
 
-<nav>
+<div class="banner-wrap">
+  <div class="banner-track" id="bannerTrack">
+    <div class="banner-slide s1">
+      <h2>🔥সপ্তাহিক ধামাকা অফার</h2>
+      <p>সিলেক্টেড পণ্যে ৬০% পর্যন্ত ছাড়, স্টক সীমিত</p>
+      <div class="flash-timer" id="flashTimer">⏳ --:--:--</div>
+    </div>
+    <div class="banner-slide s2">
+      <h2>🚚 সারাদেশে হোম ডেলিভারি</h2>
+      <p>ক্যাশ অন ডেলিভারি সুবিধা, হাতে পেয়ে টাকা দিন</p>
+    </div>
+    <div class="banner-slide s3">
+      <h2>✅ ১০০% অরিজিনাল প্রোডাক্ট</h2>
+      <p>প্রতিটি পণ্যে ওয়ারেন্টি ও রিপ্লেসমেন্ট গ্যারান্টিতে বিশেষ শর্ত প্রযোজ্য</p>
+    </div>
+  </div>
+  <div class="banner-dots" id="bannerDots"></div>
+</div>
 
-<a href="#products">Products</a>
+<div class="stats3">
+  <div><b id="count1">0</b><small>ব্যবহারকারী</small></div>
+  <div><b id="count2">0</b><small>Active কাস্টমার</small></div>
+  <div><b id="count3">0</b><small>সম্পূর্ণ অর্ডার</small></div>
+</div>
 
-<a href="#">Offers</a>
+<div class="cat-scroll" id="catScroll"></div>
 
-<a href="#">Contact</a>
+<div class="sort-bar">
+  <span id="resultCount">সব পণ্য</span>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="reset-filters" id="resetFiltersBtn" onclick="resetFilters()">ফিল্টার মুছুন</button>
+    <select id="sortSelect" onchange="renderGrid()" aria-label="সাজানোর ধরন">
+      <option value="popular">জনপ্রিয়তা অনুসারে</option>
+      <option value="low">কম দাম আগে</option>
+      <option value="high">বেশি দাম আগে</option>
+      <option value="discount">সর্বোচ্চ ছাড়</option>
+    </select>
+  </div>
+</div>
 
-</nav>
+<div class="grid" id="grid"></div>
+<button class="load-more" id="loadMoreBtn" onclick="loadMore()">আরও পণ্য দেখুন ⬇️</button>
 
-</header>
-.header{
+<div class="support-section">
+  <h3> 📞কাস্টমার সাপোর্ট</h3>
+  <div style="background:#f0fdf4;border:1px dashed #16a34a;padding:10px;border-radius:8px;margin-top:10px">
+    <p>Support: +880 1818-452637</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+      <a href="https://wa.me/message/FCHMNOYATBNHF1" target="_blank" style="background:#25D366;color:#fff;padding:12px;border-radius:9px;text-decoration:none;font-weight:800">WhatsApp</a>
+      <a href="https://m.me/1180644401807358" target="_blank" style="background:#0084FF;color:#fff;padding:12px;border-radius:9px;text-decoration:none;font-weight:800">Messenger</a>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <a href="https://www.facebook.com/profile.php?id=61591596996881" target="_blank" style="background:#1877F2;color:#fff;padding:12px;border-radius:9px;text-decoration:none;font-weight:800">Facebook</a>
+      <a href="https://youtube.com/@gadgethunterbdofficial" target="_blank" style="background:#ff0000;color:#fff;padding:12px;border-radius:9px;text-decoration:none;font-weight:800">YouTube</a>
+    </div>
+  </div>
+</div>
 
-display:flex;
+<div class="footer">© 2026 Gadget Hunter BD — <span>Trusted Gadget Shop</span></div>
 
-justify-content:space-between;
+</div><!-- /app-inner -->
+</div><!-- /app -->
 
-align-items:center;
+<!-- BOTTOM NAV (fixed, outside app-inner) -->
+<div class="bottom-nav">
+  <button class="nav-btn active" id="navHome" onclick="goHome()">
+    <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>হোম
+  </button>
+  <button class="nav-btn" id="navCat" onclick="goCategories()">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>ক্যাটাগরি
+  </button>
+  <button class="nav-btn" id="navCart" onclick="openCart()">
+    <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>কার্ট
+    <span class="nav-badge" id="navCartBadge" style="display:none">0</span>
+  </button>
+  <button class="nav-btn" id="navWish" onclick="openWishTab()">
+    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>ইচ্ছেতালিকা
+    <span class="nav-badge" id="navWishBadge" style="display:none">0</span>
+  </button>
+  <button class="nav-btn" id="navProfile" onclick="openProfile()">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>প্রোফাইল
+  </button>
+</div>
 
-padding:18px 25px;
+<button class="to-top" id="toTopBtn" onclick="scrollToTop()" aria-label="উপরে যান">↑</button>
 
-background:white;
+<div id="toastBox" aria-live="polite"></div>
 
-box-shadow:0 8px 25px rgba(0,0,0,.08);
+<!-- PRODUCT DETAIL POPUP -->
+<div class="popup-overlay" id="popupOverlay" onclick="if(event.target===this)closeP()">
+  <div class="popup" id="popupInner"></div>
+</div>
 
-position:sticky;
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <b>🛒 আমার কার্ট</b>
+    <button onclick="closeCart()" style="width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px" aria-label="কার্ট বন্ধ করুন">✕</button>
+  </div>
+  <div class="cart-items" id="cartItemsBox"></div>
+  <div class="cart-foot" id="cartFoot"></div>
+</div>
 
-top:0;
+<!-- PROFILE -->
+<div id="profileBox">
+<div class="p-header"><b>👤 My Profile</b><button onclick="closeProfile()" style="width:32px;height:32px;border-radius:50%;border:none;background:#1e293b;color:#fff" aria-label="প্রোফাইল বন্ধ করুন">✕</button></div>
 
-z-index:999;
+<div class="p-card" style="text-align:center">
+<div style="width:90px;height:90px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto"><svg viewBox="0 0 24 24" style="width:50px;height:50px;fill:#fff"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+<h3 id="pName" style="margin-top:10px">Guest User</h3>
+<p id="pPhone" style="color:var(--muted);font-size:13px">01xxxxxxxxx</p>
+<div class="p-grid2" style="margin-top:12px">
+<div class="p-stat"><b>1000+</b><small>পয়েন্ট</small></div>
+<div class="p-stat"><b id="pJoin">2026</b><small>জয়েন</small></div>
+</div>
+</div>
 
+<div class="p-card">
+<b>📝 ব্যক্তিগত তথ্য</b>
+<input id="editName" class="p-input" placeholder="আপনার নাম">
+<input id="editPhone" class="p-input" placeholder="ফোন নাম্বার (যেমন: 01712345678)" inputmode="numeric">
+<div class="p-err-msg" id="phoneErr">সঠিক বাংলাদেশি ফোন নাম্বার দিন (০১XXXXXXXXX)</div>
+<input id="editEmail" class="p-input" placeholder="ইমেইল">
+<input id="editAddress" class="p-input" placeholder="আপনার ঠিকানা">
+<button onclick="saveProfile()" class="p-btn">💾 সেভ করুন</button>
+</div>
+
+<div class="p-card">
+<b>📦 আমার অ্যাকাউন্ট</b>
+<div class="p-item"><span>🛒 কার্টে পণ্য</span><span id="pCartCount">0 টি</span></div>
+<div class="p-item"><span>❤️ Wishlist</span><span id="pWishCount">0 টি</span></div>
+<div class="p-item"><span>💰 আমার পয়েন্ট</span><span style="color:var(--rose);font-weight:800">1000+ Points</span></div>
+<div class="p-item"><span>📍 ডিফল্ট ঠিকানা</span><span id="pDefaultAddr" style="font-size:11px">সেট করা হয়নি</span></div>
+</div>
+
+<div class="p-card" style="text-align:center">
+<button onclick="clearProfile()" style="background:#fef2f2;color:var(--rose);border:1px solid #fecaca;padding:10px 20px;border-radius:9px;font-weight:700;width:100%">🚪 লগআউট</button>
+<div style="height:80px"></div>
+</div>
+</div><!-- /profileBox -->
+
+<script>
+const WA_NUMBER="8801796716499";
+const MSG="https://m.me/1180644401807358";
+const CAT_ICON={"অডিও":"🎧","ওয়াচ":"⌚","গেমিং":"🎮","ফ্যাশন":"🕶️","হোম":"🏠","এক্সেসরিজ":"🔌","ইলেকট্রনিক্স":"💻","টুলস":"🛠️","হেলথ":"💪"};
+const DELIVERY_INSIDE=70, DELIVERY_OUTSIDE=130;
+
+/* [title, price, oldPrice, image, detailsHTML, discountLabel, category] */
+const data=[
+["Apple Airpods pro 2nd Gen","৳ 620","৳ 1200","https://6a59347f116fd9eb0759f5a1.imgix.net/sandbox/931cd5117b9d1671860136f73dcda0a1%20(1).jpg","✓ ANC Noise Cancellation<br>✓ 6 ঘণ্টা ব্যাটারি<br>✓ প্রিমিয়াম বেস সাউন্ড<br>✓ iPhone & Android<br>✓ ১ বছর ওয়ারেন্টি","48% OFF","অডিও"],
+["TOKQI M01 Gimbal","৳ 6620","৳ 8500","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An-kFaiPnup6T1xDpC53VP3BW8YIFMpMgg-HeeAHkU_RzNIxJOSYMndAKvq81ViKP3ReIwhA6xYfBGJvKIpNeyGhdIRIGVrEatd93lPXnSyv.jpeg","✓ 3-Axis Stabilizer<br>✓ ভিডিও কাঁপবে না<br>✓ Object Tracking<br>✓ 12 ঘণ্টা ব্যাটারি<br>✓ Vlogging বেস্ট","22% OFF","ইলেকট্রনিক্স"],
+["Razer BlackShark V2","৳ 5990","৳ 7000","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An9mlgZHEPR4HGazHk1NDH-kKV4MiRi3sgjjScl-Gg1TuFckqGdViL2VQZDW3itvJAU82DWlyoPdM4ci8pXpMNsL1db6ynUV6yRetukhT9m-.jpeg","✓ THX 7.1 Surround<br>✓ নয়েজ ক্যান্সেলিং মাইক<br>✓ মেমোরি ফোম কুশন<br>✓ PC/PS/Xbox<br>✓ 2 বছর ওয়ারেন্টি","15% OFF","অডিও"],
+["S2000 Pro Max Watch","৳ 1600","৳ 2500","https://6a59347f116fd9eb0759f5a1.imgix.net/sandbox/An9m9ONtAqe-dOWGiJQi4w55IkcfN9dxz5lSZq3FgeYMdcbK20Q4p7rW0umjk-4gNsljzFlTIl9_rxiTZHzhWFLPwP7U3qIzMqu6bvdeDV7I.jpeg","✓ Apple Ultra লুক<br>✓ IP67 Waterproof<br>✓ Calling Feature<br>✓ Heart Rate Track<br>✓ 7 দিন ব্যাটারি","36% OFF","ওয়াচ"],
+["F11-2 Wireless Mic","৳ 1200","৳ 1800","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An8eeWTUCy4-tX22Uxkl2l7_UzXEnt6zgwIaX3qJwUbPeLv9yMM31UYUEJxV2Lfczz4IlpdAQMog_Uq2PmC3rzOcnP0Tnp6sB5Jh5-2tvmda.jpeg","✓ 20 মিটার ক্লিয়ার<br>✓ সব ফোনে চলবে<br>✓ নয়েজ ক্যান্সেল<br>✓ 6 ঘণ্টা ব্যাটারি<br>✓ YouTube বেস্ট","33% OFF","অডিও"],
+["Ultra S9 Watch","৳ 4350","৳ 5000","https://6a59347f116fd9eb0759f5a1.imgix.net/sandbox/An-OZFs3JKPqMnsrfQP8JMjzz9TXc8LpZpZAW9jJgjdCTcccQU11OdXvbTUCyfjdcL55mdHFXm72KR6gAUEds3L_ZIhlP7ogjMrhnytrogG1.jpeg","✓ Android সিম সাপোর্ট<br>✓ FB, WhatsApp<br>✓ 4G Calling<br>✓ Play Store<br>✓ 2GB RAM","13% OFF","ওয়াচ"],
+["Mini Massage Gun","৳ 999","৳ 1590","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An_hy9ekFJUbxyEKi5c5T91kJ_D1lZgKHeTi4YjYm0OVNQTWMmhpcU5q3Khq4QMaAVrQ37pfqX77ghoOFdDSAgF9Kx_uWjgZUhiJ6wVEMLrE.jpeg","✓ 5 মিনিটে রিলাক্স<br>✓ 4 হেড<br>✓ Type-C<br>✓ 1500mAh<br>✓ বাসা ও জিম","37% OFF","হেলথ"],
+["Waterproof Box","৳ 580","৳ 950","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An-icOKukfinU7EdRjv2By7eW0seXGilrsDSnoJrAbXjHs0xJxahby7zfERnUpktVqueJ7r1lR9gp2KYvtcno2KrPrsFzhg5Vw3t8r4aHRws.jpeg","✓ 100% ওয়াটারপ্রুফ<br>✓ ফোন, টাকা রাখা যায়<br>✓ সুইমিং বেস্ট<br>✓ সিলিকন সিল<br>✓ টেকসই","39% OFF","এক্সেসরিজ"],
+["Memo CX07 Cooler","৳ 1180","৳ 1800","https://6a59347f116fd9eb0759f5a1.imgix.net/sandbox/618fed9d5c0614941620-wcb94evuuber0lvtfzmh.webp?max-w=6055","✓ 10° ঠান্ডা<br>✓ ল্যাগ 0<br>✓ RGB<br>✓ Type-C<br>✓ PUBG বেস্ট","34% OFF","গেমিং"],
+["5 in 1 Gaming Combo","৳ 1980","৳ 3000","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/vywwq6mjycil9ferpdm6%20(1).webp","✓ কিবোর্ড+মাউস<br>✓ মাউসপ্যাড ফ্রি<br>✓ RGB 7 কালার<br>✓ গেমিং বেস্ট<br>✓ PC/Laptop","34% OFF","গেমিং"],
+["HY300 4K Projector","৳ 5000","৳ 7800","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.05.jpeg","✓ 120 ইঞ্চি 4K<br>✓ Android 11<br>✓ Auto Focus<br>✓ WiFi 6<br>✓ 2000 Lumens","36% OFF","ইলেকট্রনিক্স"],
+["Electric Screwdriver","৳ 1400","৳ 2340","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.06.jpeg","✓ রিচার্জেবল<br>✓ 28 বিট<br>✓ LED Light<br>✓ Type-C<br>✓ বাসার জন্য","40% OFF","টুলস"],
+["Tissot Premium Watch","৳ 1320","৳ 2190","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.50%20(2).jpeg","✓ প্রিমিয়াম লুক<br>✓ Stainless Steel<br>✓ Waterproof<br>✓ ওয়ারেন্টি<br>✓ গিফট বক্স","40% OFF","ওয়াচ"],
+["New Aura Arabic Watch","৳ 550","৳ 910","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.51.jpeg","✓ আরবি ডায়াল<br>✓ প্রিমিয়াম<br>✓ লাইটওয়েট<br>✓ স্টাইলিশ<br>✓ ছেলেদের জন্য","40% OFF","ওয়াচ"],
+["Polygonal Sunglasses","৳ 1000","৳ 1390","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.50.jpeg","✓ UV400<br>✓ Polygonal Design<br>✓ পোলারাইজড<br>✓ লাইটওয়েট<br>✓ ট্রেন্ডি","28% OFF","ফ্যাশন"],
+["Aura Matte Black","৳ 320","৳ 690","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.50%20(1).jpeg","✓ ম্যাট ব্ল্যাক<br>✓ UV Protection<br>✓ লাইটওয়েট<br>✓ স্টাইলিশ<br>✓ সবার জন্য","54% OFF","ফ্যাশন"],
+["Millionare Sunglass","৳ 1000","৳ 1590","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.49.jpeg","✓ সেলিব্রিটি লুক<br>✓ UV400<br>✓ প্রিমিয়াম মেটাল<br>✓ কেস ফ্রি<br>✓ গিফট বক্স","37% OFF","ফ্যাশন"],
+["Vintage Glasses","৳ 330","৳ 840","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.49%20(1).jpeg","✓ ভিন্টেজ ডিজাইন<br>✓ ট্রেন্ডি<br>✓ UV Protection<br>✓ হালকা<br>✓ ছেলে/মেয়ে","61% OFF","ফ্যাশন"],
+["Hand Fan","৳ 580","৳ 780","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.48.jpeg","✓ 3 স্পিড<br>✓ রিচার্জেবল<br>✓ 5 ঘণ্টা ব্যাটারি<br>✓ মিনি সাইজ<br>✓ টেবিল ফ্যান","26% OFF","হোম"],
+["Grape Peeler","৳ 1650","৳ 2099","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.52%20(1).jpeg","✓ আঙ্গুর খোসা ছাড়াবে<br>✓ স্টেইনলেস স্টিল<br>✓ হাত কাটবে না<br>✓ কিচেন বেস্ট<br>✓ টাইম সেভ","21% OFF","হোম"],
+["Turbo Fan","৳ 780","৳ 1300","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.48%20(2).jpeg","✓ মিনি সাইজ<br>✓ সুপার বাতাস<br>✓ Type-C<br>✓ 6 ঘণ্টা<br>✓ গরমের বেস্ট","40% OFF","হোম"],
+["Bubble Watch","৳ 999","৳ 1640","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.08%20(1).jpeg","✓ বাবল ডিজাইন<br>✓ পানি বের হয়<br>✓ বাচ্চাদের প্রিয়<br>✓ রিচার্জেবল<br>✓ গিফট বেস্ট","39% OFF","ওয়াচ"],
+["Data Cable Set","৳ 480","৳ 700","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.02%20(2).jpeg","✓ 4 in 1 ক্যাবল<br>✓ 65W ফাস্ট চার্জ<br>✓ iPhone/Type-C<br>✓ 1.2 মিটার<br>✓ টেকসই","31% OFF","এক্সেসরিজ"],
+["EQ34 Earbud","৳ 1020","৳ 1400","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.03%20(1).jpeg","✓ মিনি সাইজ<br>✓ 20 ঘণ্টা ব্যাটারি<br>✓ HD Sound<br>✓ Type-C<br>✓ গেমিং মোড","27% OFF","অডিও"],
+["Mecha Speaker","৳ 1220","৳ 2200","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.03.jpeg","✓ রোবট ডিজাইন<br>✓ RGB Light<br>✓ ব্লুটুথ 5.3<br>✓ 6 ঘণ্টা ব্যাটারি<br>✓ বেস সাউন্ড","45% OFF","অডিও"],
+["Neck Fan","৳ 780","৳ 1000","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.05%20(1).jpeg","✓ গলায় ঝুলে<br>✓ হাত ফ্রি<br>✓ 8 ঘণ্টা ব্যাটারি<br>✓ ঠান্ডা বাতাস<br>✓ গরমের বেস্ট","22% OFF","হোম"]
+];
+
+/* ---------- safe storage wrapper (survives private-mode / storage-disabled browsers) ---------- */
+const safeStorage={
+  get(key,fallback){ try{ const v=localStorage.getItem(key); return v===null?fallback:v; }catch(e){ return fallback; } },
+  set(key,val){ try{ localStorage.setItem(key,val); return true; }catch(e){ return false; } },
+  clear(){ try{ localStorage.clear(); }catch(e){} }
+};
+
+/* ---------- derived helpers ---------- */
+function num(s){return parseInt(String(s).replace(/[^\d]/g,''),10);}
+function discountPct(i){const p=num(data[i][1]),o=num(data[i][2]);return o>0?Math.round((1-p/o)*100):0;}
+function rating(i){return (4.3 + ((i*37)%7)/10).toFixed(1);}
+function soldRaw(i){return 150 + ((i*173)%1200);}
+function soldLabel(i){const n=soldRaw(i);return n>=1000?(n/1000).toFixed(1)+'k':n;}
+
+/* ---------- state ---------- */
+let cart=JSON.parse(safeStorage.get('gh_cart','{}'));
+let wishlist=new Set(JSON.parse(safeStorage.get('gh_wish','[]')));
+let activeCat="সব";
+let searchTerm="";
+let visibleCount=8;
+let wishTabActive=false;
+let deliveryZone=safeStorage.get('gh_zone','inside'); // inside | outside
+let searchDebounceTimer=null;
+
+function saveCart(){safeStorage.set('gh_cart',JSON.stringify(cart));}
+function saveWish(){safeStorage.set('gh_wish',JSON.stringify([...wishlist]));}
+
+/* ---------- categories ---------- */
+const cats=["সব",...new Set(data.map(p=>p[6]))];
+const catScroll=document.getElementById('catScroll');
+catScroll.innerHTML=cats.map(c=>`<div class="cat-chip ${c==='সব'?'active':''}" data-cat="${c}" onclick="setCategory('${c}')">${CAT_ICON[c]?CAT_ICON[c]+' ':''}${c}</div>`).join('');
+
+function setCategory(c){
+  activeCat=c; wishTabActive=false; visibleCount=8;
+  document.querySelectorAll('.cat-chip').forEach(el=>el.classList.toggle('active', el.dataset.cat===c));
+  renderGrid();
 }
 
-.logo{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
+/* ---------- search (debounced for smoother typing on long lists) ---------- */
+function onSearch(){
+  clearTimeout(searchDebounceTimer);
+  const val=document.getElementById('searchInput').value.trim();
+  document.getElementById('searchClear').style.display = val ? 'flex':'none';
+  searchDebounceTimer=setTimeout(()=>{
+    searchTerm=val.toLowerCase();
+    visibleCount=8;
+    renderGrid();
+  },250);
+}
+function clearSearch(){
+  document.getElementById('searchInput').value='';
+  onSearch();
+}
+function resetFilters(){
+  activeCat="সব"; wishTabActive=false; searchTerm=""; visibleCount=8;
+  document.getElementById('searchInput').value='';
+  document.getElementById('searchClear').style.display='none';
+  document.getElementById('sortSelect').value='popular';
+  document.querySelectorAll('.cat-chip').forEach(el=>el.classList.toggle('active', el.dataset.cat==='সব'));
+  renderGrid();
 }
 
-.logo img{
-
-width:50px;
-
+/* ---------- filtering + sorting ---------- */
+function getFilteredIndices(){
+  let idx=data.map((_,i)=>i);
+  if(wishTabActive) idx=idx.filter(i=>wishlist.has(i));
+  if(activeCat!=="সব") idx=idx.filter(i=>data[i][6]===activeCat);
+  if(searchTerm) idx=idx.filter(i=>data[i][0].toLowerCase().includes(searchTerm)||data[i][6].toLowerCase().includes(searchTerm));
+  const sort=document.getElementById('sortSelect').value;
+  if(sort==='low') idx.sort((a,b)=>num(data[a][1])-num(data[b][1]));
+  else if(sort==='high') idx.sort((a,b)=>num(data[b][1])-num(data[a][1]));
+  else if(sort==='discount') idx.sort((a,b)=>discountPct(b)-discountPct(a));
+  else idx.sort((a,b)=>soldRaw(b)-soldRaw(a));
+  return idx;
 }
 
-.logo h2{
-
-font-size:22px;
-
+/* ---------- render grid ---------- */
+function cardHTML(i){
+  const p=data[i];
+  const inWish=wishlist.has(i);
+  return `<div class="card">
+    <div class="offer-badge">${p[5]}</div>
+    <button class="wish-btn ${inWish?'active':''}" onclick="toggleWishlist(${i},event)" aria-label="ইচ্ছেতালিকায় যোগ করুন"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+    <div class="img-wrap loading" onclick="openP(${i},event)"><img src="${p[3]}" loading="lazy" alt="${p[0]}" onload="this.parentElement.classList.remove('loading')" onerror="this.parentElement.classList.remove('loading');this.src='https://via.placeholder.com/200?text=Gadget'"></div>
+    <div class="info">
+      <div class="title" onclick="openP(${i},event)">${p[0]}</div>
+      <div class="meta-row"><span class="star">★ ${rating(i)}</span><span>|</span><span>${soldLabel(i)} বিক্রিত</span></div>
+      <div class="price"><b>${p[1]}</b><s>${p[2]}</s></div>
+      <div class="card-actions">
+        <button class="btn-cart" onclick="addToCart(${i},1,event)" aria-label="কার্টে যোগ করুন">🛒</button>
+        <button class="btn-order" onclick="openP(${i},event)">অর্ডার করুন</button>
+      </div>
+    </div>
+  </div>`;
 }
 
-.logo p{
+function renderGrid(){
+  const grid=document.getElementById('grid');
+  const idx=getFilteredIndices();
+  const show=idx.slice(0,visibleCount);
+  document.getElementById('resultCount').innerText = wishTabActive ? `ইচ্ছেতালিকা (${idx.length})` : `${idx.length} টি পণ্য পাওয়া গেছে`;
+  document.getElementById('resetFiltersBtn').style.display = (activeCat!=="সব"||searchTerm||wishTabActive) ? 'block':'none';
+  if(idx.length===0){
+    grid.innerHTML=`<div class="empty-state"><div>${wishTabActive?'💔':'🔍'}</div>${wishTabActive?'ইচ্ছেতালিকায় কিছু নেই':'কোনো পণ্য পাওয়া যায়নি'}<br><button onclick="resetFilters()">সব পণ্য দেখুন</button></div>`;
+    document.getElementById('loadMoreBtn').style.display='none';
+    return;
+  }
+  grid.innerHTML=show.map(i=>cardHTML(i)).join('');
+  document.getElementById('loadMoreBtn').style.display = visibleCount<idx.length ? 'block':'none';
+}
+function loadMore(){visibleCount+=8; renderGrid();}
 
-font-size:12px;
-
-color:#666;
-
+/* ---------- wishlist ---------- */
+function toggleWishlist(i,e){
+  if(e) e.stopPropagation();
+  if(wishlist.has(i)){wishlist.delete(i); toast('💔 ইচ্ছেতালিকা থেকে সরানো হয়েছে');}
+  else {wishlist.add(i); toast('❤️ ইচ্ছেতালিকায় যোগ হয়েছে');}
+  saveWish(); updateBadges(); renderGrid();
+}
+function openWishTab(){
+  wishTabActive=true; activeCat="সব"; visibleCount=8;
+  document.querySelectorAll('.cat-chip').forEach(el=>el.classList.toggle('active', el.dataset.cat==='সব'));
+  setActiveNav('navWish');
+  renderGrid();
+  window.scrollTo({top:document.querySelector('.cat-scroll').offsetTop-10,behavior:'smooth'});
 }
 
-nav{
-
-display:flex;
-
-gap:20px;
-
+/* ---------- cart ---------- */
+const MAX_QTY=10;
+function addToCart(i,qty,e){
+  if(e) e.stopPropagation();
+  cart[i]=Math.min(MAX_QTY,(cart[i]||0)+qty);
+  saveCart(); updateBadges();
+  toast('🛒 কার্টে যোগ হয়েছে');
+}
+function changeCartQty(i,delta){
+  cart[i]=Math.min(MAX_QTY,(cart[i]||0)+delta);
+  if(cart[i]<=0) delete cart[i];
+  saveCart(); updateBadges(); renderCartItems();
+}
+function removeFromCart(i){
+  delete cart[i]; saveCart(); updateBadges(); renderCartItems();
+}
+function cartSubtotal(){
+  return Object.entries(cart).reduce((sum,[i,q])=>sum+num(data[i][1])*q,0);
+}
+function deliveryFee(){
+  return Object.keys(cart).length===0 ? 0 : (deliveryZone==='inside'?DELIVERY_INSIDE:DELIVERY_OUTSIDE);
+}
+function cartCount(){
+  return Object.values(cart).reduce((a,b)=>a+b,0);
+}
+function setDeliveryZone(z){
+  deliveryZone=z; safeStorage.set('gh_zone',z); renderCartItems();
+}
+function renderCartItems(){
+  const box=document.getElementById('cartItemsBox');
+  const foot=document.getElementById('cartFoot');
+  const keys=Object.keys(cart);
+  if(keys.length===0){
+    box.innerHTML=`<div class="cart-empty"><div>🛒</div>কার্ট খালি আছে<br><small style="color:#94a3b8">পছন্দের পণ্য যোগ করুন</small></div>`;
+    foot.innerHTML='';
+    return;
+  }
+  box.innerHTML=keys.map(i=>{
+    const p=data[i];
+    return `<div class="cart-item">
+      <img src="${p[3]}" alt="${p[0]}" loading="lazy">
+      <div style="flex:1">
+        <div class="ci-title">${p[0]}</div>
+        <div class="ci-price">${p[1]}</div>
+        <div class="ci-qty">
+          <button onclick="changeCartQty(${i},-1)" aria-label="কমান">−</button>
+          <span>${cart[i]}</span>
+          <button onclick="changeCartQty(${i},1)" aria-label="বাড়ান">+</button>
+          <span class="ci-remove" onclick="removeFromCart(${i})">সরান</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  const sub=cartSubtotal(), fee=deliveryFee(), grand=sub+fee;
+  foot.innerHTML=`
+    <b style="font-size:12px;color:var(--muted)">ডেলিভারি এলাকা</b>
+    <div class="delivery-toggle">
+      <button class="${deliveryZone==='inside'?'active':''}" onclick="setDeliveryZone('inside')">ঢাকার ভিতরে (৳${DELIVERY_INSIDE})</button>
+      <button class="${deliveryZone==='outside'?'active':''}" onclick="setDeliveryZone('outside')">ঢাকার বাইরে (৳${DELIVERY_OUTSIDE})</button>
+    </div>
+    <div class="cart-total-row"><span>সাবটোটাল</span><span>৳ ${sub.toLocaleString('en-US')}</span></div>
+    <div class="cart-total-row"><span>ডেলিভারি চার্জ</span><span>৳ ${fee.toLocaleString('en-US')}</span></div>
+    <div class="cart-total-row grand"><span>সর্বমোট</span><b>৳ ${grand.toLocaleString('en-US')}</b></div>
+    <div class="order-btns">
+      <button class="wa" onclick="checkoutCart()">📱 WhatsApp</button>
+      <button class="mg" onclick="openMSG()">💬 Messenger</button>
+    </div>`;
+}
+function checkoutCart(){
+  const lines=Object.entries(cart).map(([i,q])=>`- ${data[i][0]} (${q} pcs) — ${data[i][1]}`).join('%0A');
+  const name=safeStorage.get('gh_name',''), phone=safeStorage.get('gh_phone',''), addr=safeStorage.get('gh_address','');
+  const sub=cartSubtotal(), fee=deliveryFee(), grand=sub+fee;
+  let customerLine='';
+  if(name||phone||addr){
+    customerLine=`%0A%0Aগ্রাহকের তথ্য:%0Aনাম: ${encodeURIComponent(name||'-')}%0Aফোন: ${encodeURIComponent(phone||'-')}%0Aঠিকানা: ${encodeURIComponent(addr||'-')}`;
+  }
+  const zoneLabel = deliveryZone==='inside' ? 'ঢাকার ভিতরে' : 'ঢাকার বাইরে';
+  const text=`Hello Gadget Hunter BD, আমি নিচের পণ্যগুলো অর্ডার করতে চাই:%0A${lines}%0A%0Aসাবটোটাল: ৳ ${sub.toLocaleString('en-US')}%0Aডেলিভারি (${zoneLabel}): ৳ ${fee.toLocaleString('en-US')}%0Aসর্বমোট: ৳ ${grand.toLocaleString('en-US')}${customerLine}`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${text}`,'_blank');
+}
+function openCart(){
+  document.getElementById('cartOverlay').classList.add('show');
+  document.getElementById('cartDrawer').classList.add('show');
+  lockScroll();
+  renderCartItems();
+}
+function closeCart(){
+  document.getElementById('cartOverlay').classList.remove('show');
+  document.getElementById('cartDrawer').classList.remove('show');
+  unlockScroll();
+}
+function updateBadges(){
+  const cc=cartCount(), wc=wishlist.size;
+  const cb=document.getElementById('cartBadge'), ncb=document.getElementById('navCartBadge');
+  const wb=document.getElementById('wishBadge'), nwb=document.getElementById('navWishBadge');
+  [cb,ncb].forEach(el=>{el.innerText=cc; el.style.display=cc>0?'flex':'none';});
+  [wb,nwb].forEach(el=>{el.innerText=wc; el.style.display=wc>0?'flex':'none';});
+  document.getElementById('pCartCount').innerText=cc+' টি';
+  document.getElementById('pWishCount').innerText=wc+' টি';
 }
 
-nav a{
+/* ---------- product detail popup ---------- */
+let popupQty=1;
+function openP(i, e){
+  popupQty=1;
+  const p=data[i];
+  const popup=document.getElementById('popupInner');
+  const overlay=document.getElementById('popupOverlay');
 
-text-decoration:none;
+  const card = e ? e.target.closest('.card') : null;
+  if(card){
+    const r = card.getBoundingClientRect();
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const ox = ((r.left + r.width/2) / vw * 100).toFixed(1) + '%';
+    const oy = ((r.top + r.height/2) / vh * 100).toFixed(1) + '%';
+    popup.style.transformOrigin = ox + ' ' + oy;
+  } else {
+    popup.style.transformOrigin = '50% 50%';
+  }
 
-font-weight:600;
+  popup.innerHTML=`
+    <div class="close" onclick="closeP()" role="button" aria-label="বন্ধ করুন">✕</div>
+    <img src="${p[3]}" alt="${p[0]}" onerror="this.src='https://via.placeholder.com/200?text=Gadget'">
+    <h3>${p[0]}</h3>
+    <div class="meta-row"><span class="star">★ ${rating(i)}</span><span>|</span><span>${soldLabel(i)} বিক্রিত</span><span>|</span><span style="color:var(--rose);font-weight:800">${p[5]}</span></div>
+    <div class="price"><b>${p[1]}</b><s>${p[2]}</s></div>
+    <div class="details">${p[4]}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0;background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #eef2f7">
+      <b style="font-size:13px">পরিমাণ</b>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onclick="popQty(-1)" aria-label="কমান" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--navy);background:#fff;font-weight:800;cursor:pointer;font-size:14px">−</button>
+        <span id="popQtyVal" style="font-weight:800;min-width:16px;text-align:center">1</span>
+        <button onclick="popQty(1)" aria-label="বাড়ান" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--navy);background:#fff;font-weight:800;cursor:pointer;font-size:14px">+</button>
+        <button onclick="addToCart(${i},popupQty);closeP()" style="background:var(--navy);color:#fff;border:none;padding:8px 14px;border-radius:9px;font-weight:800;font-size:12px;cursor:pointer;margin-left:4px">🛒 কার্ট</button>
+      </div>
+    </div>
+    <div class="order-btns">
+      <button class="wa" onclick="openWA(${i})">📱 WhatsApp</button>
+      <button class="mg" onclick="openMSG()">💬 Messenger</button>
+    </div>
+  `;
 
-color:#333;
+  popup.classList.remove('pop-anim');
+  void popup.offsetWidth;
+  popup.classList.add('pop-anim');
 
+  overlay.classList.add('show');
+  lockScroll();
 }
+function popQty(d){
+  popupQty=Math.max(1,Math.min(MAX_QTY,popupQty+d));
+  document.getElementById('popQtyVal').innerText=popupQty;
+}
+function closeP(){
+  const popup=document.getElementById('popupInner');
+  const overlay=document.getElementById('popupOverlay');
+  popup.style.animation='popZoomOut .2s cubic-bezier(.55,.06,.68,.19) forwards';
+  setTimeout(()=>{
+    overlay.classList.remove('show');
+    popup.style.animation='';
+    popup.classList.remove('pop-anim');
+    unlockScroll();
+  },190);
+}
+function openWA(i){
+  const p=data[i];
+  const text=`Hello Gadget Hunter BD, আমি ${p[0]} (${p[1]}) — ${popupQty} pcs অর্ডার করতে চাই।`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`,'_blank');
+}
+function openMSG(){window.open(MSG,'_blank');}
+
+function lockScroll(){
+  const app=document.getElementById('app');
+  window._sv = window.pageYOffset||document.documentElement.scrollTop||app.scrollTop||0;
+  document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
+}
+function unlockScroll(){
+  document.body.style.overflow='';
+  document.documentElement.style.overflow='';
+}
+
+/* ---------- toast (queue-limited so it can't stack forever) ---------- */
+let activeToasts=0;
+function toast(msg){
+  if(activeToasts>=3) return;
+  activeToasts++;
+  const box=document.getElementById('toastBox');
+  const t=document.createElement('div');
+  t.className='toast'; t.innerText=msg;
+  box.appendChild(t);
+  setTimeout(()=>{t.remove(); activeToasts--;},2500);
+}
+
+/* ---------- bottom nav ---------- */
+function setActiveNav(id){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goHome(){
+  wishTabActive=false; activeCat="সব"; visibleCount=8;
+  document.getElementById('searchInput').value=''; searchTerm='';
+  document.getElementById('searchClear').style.display='none';
+  document.querySelectorAll('.cat-chip').forEach(el=>el.classList.toggle('active', el.dataset.cat==='সব'));
+  setActiveNav('navHome');
+  window.scrollTo({top:0,behavior:'smooth'});
+  renderGrid();
+}
+function goCategories(){
+  setActiveNav('navCat');
+  document.querySelector('.cat-scroll').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ---------- stats counter ---------- */
+function runCounter(id, target){
+  var el=document.getElementById(id); var c=0; var step=target/60;
+  var t=setInterval(function(){ c+=step; if(c>=target){ el.innerText=target+'+'; clearInterval(t); } else{ el.innerText=Math.floor(c); } },25);
+}
+
+/* ---------- banner carousel ---------- */
+const bannerTrack=document.getElementById('bannerTrack');
+const slidesCount=bannerTrack.children.length;
+const dotsBox=document.getElementById('bannerDots');
+for(let d=0; d<slidesCount; d++){dotsBox.innerHTML+=`<span class="${d===0?'active':''}"></span>`;}
+let bannerIdx=0;
+let bannerTimer=null;
+function goToSlide(n){
+  bannerIdx=n%slidesCount;
+  bannerTrack.scrollTo({left:bannerTrack.clientWidth*bannerIdx,behavior:'smooth'});
+  [...dotsBox.children].forEach((el,k)=>el.classList.toggle('active',k===bannerIdx));
+}
+function startBannerAuto(){
+  clearInterval(bannerTimer);
+  bannerTimer=setInterval(()=>goToSlide(bannerIdx+1),4500);
+}
+startBannerAuto();
+bannerTrack.addEventListener('scroll',()=>{
+  const idx=Math.round(bannerTrack.scrollLeft/bannerTrack.clientWidth);
+  [...dotsBox.children].forEach((el,k)=>el.classList.toggle('active',k===idx));
+  bannerIdx=idx;
+});
+/* pause auto-rotate while user is interacting with the banner */
+['touchstart','pointerdown'].forEach(ev=>bannerTrack.addEventListener(ev,()=>clearInterval(bannerTimer)));
+['touchend','pointerup'].forEach(ev=>bannerTrack.addEventListener(ev,startBannerAuto));
+
+/* ---------- flash sale countdown (resets daily at midnight) ---------- */
+function updateFlashTimer(){
+  const now=new Date();
+  const end=new Date(now); end.setHours(24,0,0,0);
+  let diff=Math.max(0,end-now);
+  const h=String(Math.floor(diff/3600000)).padStart(2,'0');
+  const m=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  const s=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  const el=document.getElementById('flashTimer');
+  if(el) el.innerText=`⏳ ${h}:${m}:${s}`;
+}
+setInterval(updateFlashTimer,1000);
+
+/* ---------- profile ---------- */
+function isValidBDPhone(v){
+  return /^01[3-9]\d{8}$/.test(v.replace(/\s|-/g,''));
+}
+function openProfile(){
+  lockScroll();
+  let box=document.getElementById('profileBox');
+  box.style.display='block'; box.scrollTop=0;
+  document.getElementById('pName').innerText = safeStorage.get('gh_name','Guest User');
+  document.getElementById('pPhone').innerText = safeStorage.get('gh_phone','01xxxxxxxxx');
+  document.getElementById('editName').value = safeStorage.get('gh_name','');
+  document.getElementById('editPhone').value = safeStorage.get('gh_phone','');
+  document.getElementById('editEmail').value = safeStorage.get('gh_email','');
+  document.getElementById('editAddress').value = safeStorage.get('gh_address','');
+  document.getElementById('pDefaultAddr').innerText = safeStorage.get('gh_address','সেট করা হয়নি');
+  document.getElementById('pJoin').innerText = safeStorage.get('gh_join','2026');
+  document.getElementById('phoneErr').style.display='none';
+  document.getElementById('editPhone').classList.remove('err');
+  updateBadges();
+}
+function closeProfile(){
+  document.getElementById('profileBox').style.display='none';
+  unlockScroll();
+}
+function saveProfile(){
+  var n=document.getElementById('editName').value.trim();
+  if(!n){toast('⚠️ নাম লিখুন');return;}
+  var phoneEl=document.getElementById('editPhone');
+  var phone=phoneEl.value.trim();
+  if(phone && !isValidBDPhone(phone)){
+    phoneEl.classList.add('err');
+    document.getElementById('phoneErr').style.display='block';
+    toast('⚠️ সঠিক ফোন নাম্বার দিন');
+    return;
+  }
+  phoneEl.classList.remove('err');
+  document.getElementById('phoneErr').style.display='none';
+  safeStorage.set('gh_name',n);
+  safeStorage.set('gh_phone',phone);
+  safeStorage.set('gh_email',document.getElementById('editEmail').value.trim());
+  safeStorage.set('gh_address',document.getElementById('editAddress').value.trim());
+  if(!safeStorage.get('gh_join',null)) safeStorage.set('gh_join', new Date().getFullYear());
+  toast('✅ প্রোফাইল সেভ হয়েছে'); openProfile();
+}
+function clearProfile(){ if(confirm('লগআউট করবেন?')){ safeStorage.clear(); cart={}; wishlist=new Set(); updateBadges(); closeProfile(); goHome(); } }
+
+/* ---------- header shrink + scroll-to-top on scroll ---------- */
+function onAppScroll(){
+  const y=getScroll();
+  const header=document.getElementById('topHeader');
+  const toTop=document.getElementById('toTopBtn');
+  if(header) header.classList.toggle('compact', y>60);
+  if(toTop) toTop.classList.toggle('show', y>500);
+}
+function scrollToTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+  const app=document.getElementById('app'); if(app) app.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- viewport sync (Google Sites iframe fix) ----------
+   Google Sites embeds our page in an iframe. Inside an iframe,
+   window.scrollY is always 0 and position:fixed attaches to the
+   document bottom instead of the visible screen.
+   Solution: read the REAL scroll from every possible source,
+   then pin each overlay to the current visible viewport every frame. */
+(function(){
+  const elTop   = []; // full-screen overlays (popup, cart, profile)
+  const elBottom= []; // stick-to-bottom elements (nav, toast, to-top)
+
+  function collect(){
+    elTop.length=0; elBottom.length=0;
+    ['popupOverlay','cartOverlay','cartDrawer','profileBox'].forEach(id=>{
+      const el=document.getElementById(id); if(el) elTop.push(el);
+    });
+    document.querySelectorAll('.bottom-nav').forEach(el=>elBottom.push(el));
+    const tb=document.getElementById('toastBox'); if(tb) elBottom.push(tb);
+  }
+
+  window.getScroll=function(){
+    if(window.pageYOffset) return window.pageYOffset;
+    if(document.documentElement.scrollTop) return document.documentElement.scrollTop;
+    if(document.body.scrollTop) return document.body.scrollTop;
+    try{
+      let el=document.body;
+      while(el){
+        if(el.scrollTop>0) return el.scrollTop;
+        el=el.parentElement;
+      }
+      if(window.parent && window.parent!==window)
+        return window.parent.pageYOffset||window.parent.scrollY||0;
+    }catch(e){}
+    return 0;
+  };
+
+  function sync(){
+    const y   = getScroll();
+    const vh  = window.innerHeight;
+    const vw  = window.innerWidth;
+
+    elTop.forEach(el=>{
+      el.style.top    = y + 'px';
+      el.style.height = vh + 'px';
+      el.style.width  = vw + 'px';
+    });
+    elBottom.forEach(el=>{
+      el.style.top   = (y + vh - el.offsetHeight) + 'px';
+      el.style.left  = '0';
+      el.style.right = '0';
+    });
+    const toTop=document.getElementById('toTopBtn');
+    if(toTop){
+      toTop.style.top = (y + vh - 150) + 'px';
+      toTop.style.right = '16px';
+      toTop.style.left = 'auto';
+    }
+    onAppScroll();
+    requestAnimationFrame(sync);
+  }
+
+  collect();
+  requestAnimationFrame(sync);
+  window.addEventListener('resize', collect);
+  window.addEventListener('orientationchange', collect);
+  ['scroll','touchmove'].forEach(ev=>{
+    window.addEventListener(ev, sync, {passive:true});
+    document.addEventListener(ev, sync, {passive:true});
+  });
+})();
+
+/* ---------- init ---------- */
+renderGrid();
+updateBadges();
+updateFlashTimer();
+setTimeout(function(){ runCounter('count1',1000); runCounter('count2',385); runCounter('count3',300); },500);
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Gadget Hunter BD - Advanced</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Baloo+Da+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f172a;
+  --navy-2:#1e293b;
+  --rose:#e11d48;
+  --rose-dark:#be123c;
+  --amber:#f59e0b;
+  --bg:#eef1f6;
+  --card:#ffffff;
+  --line:#e6eaf0;
+  --muted:#64748b;
+  --wa:#25D366;
+  --mg:#0084FF;
+  --radius:16px;
+  --font-ui: 'Hind Siliguri', sans-serif;
+  --font-display: 'Baloo Da 2', 'Hind Siliguri', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--font-ui)}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+#app{height:100vh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;position:relative;background:var(--bg)}
+#app-inner{padding:10px 10px 90px;max-width:520px;margin:0 auto;color:var(--navy)}
+@media(min-width:600px){#app-inner{max-width:760px}}
+html.no-scroll #app,body.no-scroll #app{overflow:hidden !important}
+::-webkit-scrollbar{display:none}
+*{scrollbar-width:none}
+.cat-scroll,.banner-track,.cart-items,.popup{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+:focus-visible{outline:2.5px solid var(--amber);outline-offset:2px}
+
+/* ---------- HEADER ---------- */
+.top{background:var(--navy);color:#fff;padding:14px 14px;border-radius:18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;position:relative;overflow:hidden;transition:padding .25s ease}
+.top.compact{padding:8px 14px}
+.top::after{content:"";position:absolute;right:-40px;top:-40px;width:130px;height:130px;background:radial-gradient(circle,rgba(245,158,11,.35),transparent 70%)}
+.top-left{position:relative;z-index:1}
+.top-left h1{font-family:var(--font-display);font-size:21px;font-weight:800;letter-spacing:.2px;transition:font-size .25s ease}
+.top.compact .top-left h1{font-size:17px}
+.top-left p{font-size:9.5px;color:var(--amber);font-weight:700;margin-top:2px;transition:.2s}
+.top.compact .top-left p{max-height:0;opacity:0;margin-top:0;overflow:hidden}
+.top-right{display:flex;gap:10px;align-items:center;position:relative;z-index:1}
+.icon-btn{width:42px;height:42px;background:rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;border:2px solid rgba(255,255,255,.15)}
+.icon-btn svg{width:20px;height:20px;fill:#fff;pointer-events:none}
+.badge-count{position:absolute;top:-4px;right:-4px;background:var(--rose);color:#fff;font-size:9px;font-weight:800;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--navy)}
+.profile-icon{width:42px;height:42px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #fff}
+.profile-icon svg{width:22px;height:22px;fill:var(--navy);pointer-events:none}
+
+/* ---------- SEARCH ---------- */
+.search-wrap{background:var(--card);border-radius:14px;padding:5px;margin-bottom:10px;display:flex;align-items:center;gap:8px;border:1px solid var(--line);position:sticky;top:0;z-index:60}
+.search-wrap svg{width:18px;height:18px;fill:var(--muted);margin-left:8px;flex-shrink:0}
+.search-wrap input{border:none;outline:none;flex:1;padding:9px 4px;font-size:13.5px;background:transparent}
+.search-clear{width:26px;height:26px;border-radius:50%;background:var(--bg);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--muted);margin-right:4px;flex-shrink:0}
+
+/* ---------- BANNER CAROUSEL ---------- */
+.banner-wrap{position:relative;margin-bottom:10px}
+.banner-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:16px;gap:0}
+.banner-slide{min-width:100%;scroll-snap-align:start;border-radius:16px;padding:18px 16px;color:#fff;position:relative;overflow:hidden;min-height:100px;display:flex;flex-direction:column;justify-content:center}
+.banner-slide.s1{background:linear-gradient(120deg,var(--rose),#9f1239)}
+.banner-slide.s2{background:linear-gradient(120deg,var(--navy),#334155)}
+.banner-slide.s3{background:linear-gradient(120deg,var(--amber),#b45309)}
+.banner-slide h2{font-family:var(--font-display);font-size:18px;font-weight:800}
+.banner-slide p{font-size:11.5px;margin-top:4px;opacity:.9}
+.banner-slide .flash-timer{margin-top:8px;display:inline-flex;gap:5px;font-weight:800;font-size:12px;background:rgba(0,0,0,.25);padding:5px 9px;border-radius:8px;width:fit-content}
+.banner-dots{display:flex;justify-content:center;gap:5px;margin-top:7px}
+.banner-dots span{width:6px;height:6px;border-radius:50%;background:#cbd5e1;transition:.25s}
+.banner-dots span.active{background:var(--rose);width:16px;border-radius:4px}
+
+/* ---------- STATS ---------- */
+.stats3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:var(--card);padding:16px 8px;border-radius:14px;margin-bottom:10px;text-align:center;border:1px solid var(--line)}
+.stats3 b{font-size:22px;color:var(--navy);display:block;font-weight:800;font-family:var(--font-display)}
+.stats3 small{font-size:10px;color:var(--muted)}
+
+/* ---------- CATEGORIES ---------- */
+.cat-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin-bottom:10px}
+.cat-chip{flex-shrink:0;background:var(--card);border:1.5px solid var(--line);padding:8px 14px;border-radius:999px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--navy);white-space:nowrap;transition:.15s}
+.cat-chip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ---------- SORT / RESULT BAR ---------- */
+.sort-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 2px;gap:8px;flex-wrap:wrap}
+.sort-bar span{font-size:12px;color:var(--muted);font-weight:600}
+.sort-bar select{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 10px;font-size:12px;font-weight:700;color:var(--navy)}
+.reset-filters{font-size:11.5px;font-weight:700;color:var(--rose);background:#fff1f2;border:1px solid #fecdd3;border-radius:8px;padding:6px 10px;cursor:pointer;display:none}
+
+/* ---------- GRID / CARD ---------- */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.card{background:var(--card);border-radius:16px;border:1px solid var(--line);position:relative;display:flex;flex-direction:column;overflow:visible;animation:cardIn .35s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card>.img-wrap,.card>img{border-radius:16px 16px 0 0;overflow:hidden}
+.offer-badge{position:absolute;top:8px;left:8px;background:var(--rose);color:#fff;font-size:10px;font-weight:800;padding:4px 7px;border-radius:7px;z-index:5}
+.wish-btn{position:absolute;top:6px;right:6px;width:30px;height:30px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:5;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.12);border:none}
+.wish-btn svg{width:16px;height:16px;fill:none;stroke:#94a3b8;stroke-width:2}
+.wish-btn.active svg{fill:var(--rose);stroke:var(--rose)}
+.img-wrap{cursor:pointer;background:#f8fafc;position:relative}
+.img-wrap.loading::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f1f5f9 25%,#e8edf3 37%,#f1f5f9 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+.card img{width:100%;height:140px;object-fit:contain;padding:10px;background:#fff;display:block;position:relative;z-index:1}
+.info{padding:10px 10px 8px;display:flex;flex-direction:column;flex:1}
+.title{font-size:12.8px;font-weight:700;height:33px;overflow:hidden;line-height:16.5px;cursor:pointer}
+.meta-row{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:10.5px;color:var(--muted)}
+.meta-row .star{color:var(--amber);font-weight:800}
+.price{margin:5px 0 7px;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+.price b{color:var(--rose);font-size:14.5px}
+.price s{color:#94a3b8;font-size:10.5px}
+.card-actions{display:flex;gap:6px;margin-top:auto}
+.btn-cart{width:38px;height:36px;flex-shrink:0;background:var(--bg);border:1px solid var(--line);border-radius:9px;font-size:15px;cursor:pointer}
+.btn-order{flex:1;background:var(--navy);color:#fff;border:none;padding:0 4px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;height:36px}
+
+.load-more{display:block;margin:14px auto 4px;background:var(--card);border:1.5px solid var(--navy);color:var(--navy);padding:11px 26px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer}
+.empty-state{grid-column:1/-1;text-align:center;padding:40px 10px;color:var(--muted)}
+.empty-state div{font-size:34px;margin-bottom:8px}
+.empty-state button{margin-top:10px;background:var(--navy);color:#fff;border:none;padding:9px 18px;border-radius:9px;font-weight:800;font-size:12.5px;cursor:pointer}
+
+/* ---------- PRODUCT DETAIL POPUP ---------- */
+.popup-overlay{
+  position:absolute;
+  left:0;right:0;
+  background:rgba(15,23,42,.55);
+  z-index:200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.popup-overlay.show{display:flex}
+.popup{background:#fff;width:100%;max-width:480px;border-radius:20px;max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:14px 16px 16px;position:relative}
+.popup.pop-anim{animation:popZoom .32s cubic-bezier(.175,.885,.32,1.275) forwards}
+@keyframes popZoom{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes popZoomOut{from{transform:scale(1);opacity:1}to{transform:scale(0.4);opacity:0}}
+.popup .close{position:absolute;top:12px;right:14px;background:var(--bg);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:bold;z-index:2}
+.popup img{width:100%;height:210px;object-fit:contain;background:#f8fafc;border-radius:14px}
+.popup h3{font-size:16px;margin-top:12px;font-weight:800;padding-right:30px}
+.popup .meta-row{margin-top:4px;font-size:12px}
+.popup .price{margin:8px 0}
+.popup .price b{font-size:20px}
+.popup .price s{font-size:12px}
+.details{background:#f8fafc;padding:12px 13px;border-radius:12px;margin:10px 0;font-size:13px;line-height:23px;border:1px solid #eef2f7}
+.qty-row{display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border-radius:10px;padding:10px 12px;margin:10px 0;border:1px solid #eef2f7}
+.qty-row b{font-size:13px}
+.qty-ctrl{display:flex;align-items:center;gap:12px}
+.qty-ctrl button{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--navy);background:#fff;font-weight:800;cursor:pointer;font-size:14px}
+.qty-ctrl span{font-weight:800;min-width:16px;text-align:center}
+.popup-actions{display:flex;gap:8px;margin-top:8px}
+.btn-add-cart{flex:1;background:var(--bg);border:1.5px solid var(--navy);color:var(--navy);padding:12px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer}
+.wa{background:var(--wa);color:#fff;padding:12px 8px;border-radius:10px;text-align:center;text-decoration:none;font-weight:800;display:block;border:none;cursor:pointer;font-size:13px;flex:1}
+.mg{background:var(--mg);color:#fff;padding:12px 8px;border-radius:10px;text-align:center;text-decoration:none;font-weight:800;display:block;border:none;cursor:pointer;font-size:13px;flex:1}
+.order-btns{display:flex;gap:8px;margin-top:8px}
+
+/* ---------- CART DRAWER ---------- */
+.cart-overlay{position:absolute;left:0;right:0;background:rgba(15,23,42,.6);z-index:300;display:none}
+.cart-overlay.show{display:block}
+.cart-drawer{position:absolute;right:0;width:88%;max-width:400px;background:#fff;z-index:301;transform:translateX(100%);transition:transform .28s ease;display:flex;flex-direction:column}
+.cart-drawer.show{transform:translateX(0)}
+.cart-head{background:var(--navy);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.cart-items{flex:1;overflow-y:auto;padding:10px 14px}
+.cart-item{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.cart-item img{width:58px;height:58px;object-fit:contain;background:#f8fafc;border-radius:8px;border:1px solid var(--line)}
+.cart-item .ci-title{font-size:12.5px;font-weight:700;line-height:16px;height:32px;overflow:hidden}
+.cart-item .ci-price{color:var(--rose);font-weight:800;font-size:13px;margin-top:3px}
+.cart-item .ci-qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.cart-item .ci-qty button{width:22px;height:22px;border-radius:50%;border:1px solid var(--navy);background:#fff;font-weight:800;cursor:pointer;font-size:12px;line-height:1}
+.cart-item .ci-remove{margin-left:auto;color:var(--rose);font-size:11px;font-weight:700;cursor:pointer;align-self:flex-start}
+.cart-empty{text-align:center;padding:50px 10px;color:var(--muted)}
+.cart-empty div{font-size:38px;margin-bottom:10px}
+.cart-foot{padding:14px;border-top:1px solid var(--line)}
+.cart-total-row{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px;color:var(--muted);font-weight:600}
+.cart-total-row.grand{font-size:14px;font-weight:800;color:var(--navy);margin-top:6px;padding-top:8px;border-top:1px dashed var(--line)}
+.cart-total-row b{color:var(--rose);font-size:17px}
+.delivery-toggle{display:flex;gap:6px;margin:8px 0}
+.delivery-toggle button{flex:1;padding:8px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-size:11.5px;font-weight:700;cursor:pointer;color:var(--navy)}
+.delivery-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ---------- SUPPORT / FOOTER ---------- */
+.support-section{background:var(--card);border-radius:16px;padding:14px;margin-top:14px;border:1px solid var(--line);text-align:center}
+.footer{background:var(--navy);color:#fff;text-align:center;padding:18px;border-radius:16px;margin-top:16px;font-size:12px}
+.footer span{color:var(--amber)}
+
+/* ---------- PROFILE ---------- */
+#profileBox{position:absolute;left:0;right:0;background:var(--bg);z-index:9999;padding:10px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;display:none}
+#profileBox *{touch-action:pan-y !important}
+.p-header{background:var(--navy);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;border-radius:14px;margin-bottom:10px;max-width:520px;margin-left:auto;margin-right:auto}
+.p-card{background:#fff;margin:10px auto;width:100%;max-width:520px;border-radius:14px;padding:14px;border:1px solid var(--line)}
+.p-input{width:100%;padding:12px;margin-top:8px;border:1px solid #ddd;border-radius:9px;font-size:14px}
+.p-input.err{border-color:var(--rose)}
+.p-err-msg{color:var(--rose);font-size:11px;margin-top:4px;display:none}
+.p-grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.p-stat{background:var(--bg);padding:10px;border-radius:9px;text-align:center;border:1px solid #eef2f7}
+.p-stat b{display:block;font-size:18px;font-family:var(--font-display)}
+.p-btn{width:100%;background:var(--navy);color:#fff;padding:13px;border-radius:11px;margin-top:12px;font-weight:800;border:none;cursor:pointer}
+.p-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bg);font-size:13px}
+
+/* ---------- BOTTOM NAV ---------- */
+.bottom-nav{position:absolute;left:0;right:0;background:#fff;display:flex;justify-content:space-around;align-items:center;padding:8px 4px 10px;border-top:1px solid var(--line);z-index:150;box-shadow:0 -4px 14px rgba(0,0,0,.07)}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;background:none;border:none;color:var(--muted);font-size:9.5px;font-weight:700;position:relative;padding:4px 8px}
+.nav-btn svg{width:21px;height:21px;fill:none;stroke:var(--muted);stroke-width:2}
+.nav-btn.active{color:var(--navy)}
+.nav-btn.active svg{stroke:var(--navy);fill:rgba(15,23,42,.06)}
+.nav-badge{position:absolute;top:-2px;right:2px;background:var(--rose);color:#fff;font-size:8.5px;font-weight:800;min-width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 2px}
+
+/* ---------- SCROLL TO TOP ---------- */
+.to-top{position:absolute;width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;border:none;font-size:17px;box-shadow:0 6px 16px rgba(0,0,0,.25);cursor:pointer;z-index:140;display:none;align-items:center;justify-content:center}
+.to-top.show{display:flex}
+
+/* ---------- TOAST ---------- */
+#toastBox{position:absolute;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:6px;align-items:center;width:90%;max-width:400px}
+.toast{background:var(--navy);color:#fff;padding:11px 18px;border-radius:10px;font-size:12.5px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;transform:translateY(10px);animation:toastIn .25s forwards, toastOut .25s forwards 2.2s}
+@keyframes toastIn{to{opacity:1;transform:translateY(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-6px)}}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="app-inner">
+
+<div class="top" id="topHeader">
+  <div class="top-left">
+    <h1>Gadget Hunter BD</h1>
+    <p>১০০% বিশ্বস্ত ই-কমার্স প্লাটফর্ম</p>
+  </div>
+  <div class="top-right">
+    <div class="icon-btn" onclick="openCart()" role="button" tabindex="0" aria-label="কার্ট দেখুন">
+      <svg viewBox="0 0 24 24"><path d="M7 4h-2l-1 2v2h2l3.6 7.59-1.35 2.44c-.16.28-.25.61-.25.97 0 1.1.9 2 2 2h12v-2h-11.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1h-14.19l-.94-2zm2 14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+      <span class="badge-count" id="cartBadge" style="display:none">0</span>
+    </div>
+    <div class="icon-btn" onclick="openWishTab()" role="button" tabindex="0" aria-label="ইচ্ছেতালিকা দেখুন">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.87-10-9.28C.36 8.6 1.9 5 5.4 5c2 0 3.4 1.1 4.6 2.7C11.2 6.1 12.6 5 14.6 5c3.5 0 5.04 3.6 3.4 6.72C19.5 16.13 12 21 12 21z"/></svg>
+      <span class="badge-count" id="wishBadge" style="display:none">0</span>
+    </div>
+    <div class="profile-icon" onclick="openProfile()" role="button" tabindex="0" aria-label="প্রোফাইল খুলুন"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  <input id="searchInput" placeholder="পণ্যের নাম লিখে খুঁজুন..." oninput="onSearch()" aria-label="পণ্য খুঁজুন">
+  <div class="search-clear" id="searchClear" onclick="clearSearch()" role="button" aria-label="সার্চ মুছুন">✕</div>
+</div>
+
+<div class="banner-wrap">
+  <div class="banner-track" id="bannerTrack">
+    <div class="banner-slide s1">
+      <h2>⚡ ফ্ল্যাশ সেল লাইভ!</h2>
+      <p>সিলেক্টেড পণ্যে ৬০% পর্যন্ত ছাড়, স্টক সীমিত</p>
+      <div class="flash-timer" id="flashTimer">⏳ --:--:--</div>
+    </div>
+    <div class="banner-slide s2">
+      <h2>🚚 সারাদেশে হোম ডেলিভারি</h2>
+      <p>ক্যাশ অন ডেলিভারি সুবিধা, হাতে পেয়ে টাকা দিন</p>
+    </div>
+    <div class="banner-slide s3">
+      <h2>✅ ১০০% অরিজিনাল প্রোডাক্ট</h2>
+      <p>প্রতিটি পণ্যে ওয়ারেন্টি ও রিপ্লেসমেন্ট গ্যারান্টি</p>
+    </div>
+  </div>
+  <div class="banner-dots" id="bannerDots"></div>
+</div>
+
+<div class="stats3">
+  <div><b id="count1">0</b><small>ব্যবহারকারী</small></div>
+  <div><b id="count2">0</b><small>Active কাস্টমার</small></div>
+  <div><b id="count3">0</b><small>সম্পূর্ণ অর্ডার</small></div>
+</div>
+
+<div class="cat-scroll" id="catScroll"></div>
+
+<div class="sort-bar">
+  <span id="resultCount">সব পণ্য</span>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="reset-filters" id="resetFiltersBtn" onclick="resetFilters()">ফিল্টার মুছুন</button>
+    <select id="sortSelect" onchange="renderGrid()" aria-label="সাজানোর ধরন">
+      <option value="popular">জনপ্রিয়তা অনুসারে</option>
+      <option value="low">কম দাম আগে</option>
+      <option value="high">বেশি দাম আগে</option>
+      <option value="discount">সর্বোচ্চ ছাড়</option>
+    </select>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+<button class="load-more" id="loadMoreBtn" onclick="loadMore()">আরও পণ্য দেখুন ⬇️</button>
+
+<div class="support-section">
+  <h3>💬 কাস্টমার সাপোর্ট</h3>
+  <div style="background:#f0fdf4;border:1px dashed #16a34a;padding:10px;border-radius:8px;margin-top:10px">
+    <p>Support: +880 1818-452637</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+      <a href="https://wa.me/message/FCHMNOYATBNHF1" target="_blank" style="background:#25D366;color:#fff;padding:12px;border-radius:9px;text-decoration:none;font-weight:800">WhatsApp</a>
+      <a href="https://m.me/61591596996881" target="_blank" style="background:#0084FF;color:#fff;padding:12px;border-radius:9px;text-decoration:none;font-weight:800">Messenger</a>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <a href="https://www.facebook.com/profile.php?id=61591596996881" target="_blank" style="background:#1877F2;color:#fff;padding:12px;border-radius:9px;text-decoration:none;font-weight:800">Facebook</a>
+      <a href="https://youtube.com/@gadgethunterbdofficial" target="_blank" style="background:#ff0000;color:#fff;padding:12px;border-radius:9px;text-decoration:none;font-weight:800">YouTube</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">© 2026 Gadget Hunter BD — <span>Trusted Gadget Shop</span></div>
+
+</div><!-- /app-inner -->
+</div><!-- /app -->
+
+<!-- BOTTOM NAV (fixed, outside app-inner) -->
+<div class="bottom-nav">
+  <button class="nav-btn active" id="navHome" onclick="goHome()">
+    <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>হোম
+  </button>
+  <button class="nav-btn" id="navCat" onclick="goCategories()">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>ক্যাটাগরি
+  </button>
+  <button class="nav-btn" id="navCart" onclick="openCart()">
+    <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>কার্ট
+    <span class="nav-badge" id="navCartBadge" style="display:none">0</span>
+  </button>
+  <button class="nav-btn" id="navWish" onclick="openWishTab()">
+    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>ইচ্ছেতালিকা
+    <span class="nav-badge" id="navWishBadge" style="display:none">0</span>
+  </button>
+  <button class="nav-btn" id="navProfile" onclick="openProfile()">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>প্রোফাইল
+  </button>
+</div>
+
+<button class="to-top" id="toTopBtn" onclick="scrollToTop()" aria-label="উপরে যান">↑</button>
+
+<div id="toastBox" aria-live="polite"></div>
+
+<!-- PRODUCT DETAIL POPUP -->
+<div class="popup-overlay" id="popupOverlay" onclick="if(event.target===this)closeP()">
+  <div class="popup" id="popupInner"></div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <b>🛒 আমার কার্ট</b>
+    <button onclick="closeCart()" style="width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px" aria-label="কার্ট বন্ধ করুন">✕</button>
+  </div>
+  <div class="cart-items" id="cartItemsBox"></div>
+  <div class="cart-foot" id="cartFoot"></div>
+</div>
+
+<!-- PROFILE -->
+<div id="profileBox">
+<div class="p-header"><b>👤 My Profile</b><button onclick="closeProfile()" style="width:32px;height:32px;border-radius:50%;border:none;background:#1e293b;color:#fff" aria-label="প্রোফাইল বন্ধ করুন">✕</button></div>
+
+<div class="p-card" style="text-align:center">
+<div style="width:90px;height:90px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto"><svg viewBox="0 0 24 24" style="width:50px;height:50px;fill:#fff"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+<h3 id="pName" style="margin-top:10px">Guest User</h3>
+<p id="pPhone" style="color:var(--muted);font-size:13px">01xxxxxxxxx</p>
+<div class="p-grid2" style="margin-top:12px">
+<div class="p-stat"><b>1000+</b><small>পয়েন্ট</small></div>
+<div class="p-stat"><b id="pJoin">2026</b><small>জয়েন</small></div>
+</div>
+</div>
+
+<div class="p-card">
+<b>📝 ব্যক্তিগত তথ্য</b>
+<input id="editName" class="p-input" placeholder="আপনার নাম">
+<input id="editPhone" class="p-input" placeholder="ফোন নাম্বার (যেমন: 01712345678)" inputmode="numeric">
+<div class="p-err-msg" id="phoneErr">সঠিক বাংলাদেশি ফোন নাম্বার দিন (০১XXXXXXXXX)</div>
+<input id="editEmail" class="p-input" placeholder="ইমেইল">
+<input id="editAddress" class="p-input" placeholder="আপনার ঠিকানা">
+<button onclick="saveProfile()" class="p-btn">💾 সেভ করুন</button>
+</div>
+
+<div class="p-card">
+<b>📦 আমার অ্যাকাউন্ট</b>
+<div class="p-item"><span>🛒 কার্টে পণ্য</span><span id="pCartCount">0 টি</span></div>
+<div class="p-item"><span>❤️ Wishlist</span><span id="pWishCount">0 টি</span></div>
+<div class="p-item"><span>💰 আমার পয়েন্ট</span><span style="color:var(--rose);font-weight:800">1000+ Points</span></div>
+<div class="p-item"><span>📍 ডিফল্ট ঠিকানা</span><span id="pDefaultAddr" style="font-size:11px">সেট করা হয়নি</span></div>
+</div>
+
+<div class="p-card" style="text-align:center">
+<button onclick="clearProfile()" style="background:#fef2f2;color:var(--rose);border:1px solid #fecaca;padding:10px 20px;border-radius:9px;font-weight:700;width:100%">🚪 লগআউট</button>
+<div style="height:80px"></div>
+</div>
+</div><!-- /profileBox -->
+
+<script>
+const WA_NUMBER="8801796716499";
+const MSG="https://m.me/61591596996881";
+const CAT_ICON={"অডিও":"🎧","ওয়াচ":"⌚","গেমিং":"🎮","ফ্যাশন":"🕶️","হোম":"🏠","এক্সেসরিজ":"🔌","ইলেকট্রনিক্স":"💻","টুলস":"🛠️","হেলথ":"💪"};
+const DELIVERY_INSIDE=70, DELIVERY_OUTSIDE=130;
+
+/* [title, price, oldPrice, image, detailsHTML, discountLabel, category] */
+const data=[
+["Apple Airpods pro 2nd Gen","৳ 620","৳ 1200","https://6a59347f116fd9eb0759f5a1.imgix.net/sandbox/931cd5117b9d1671860136f73dcda0a1%20(1).jpg","✓ ANC Noise Cancellation<br>✓ 6 ঘণ্টা ব্যাটারি<br>✓ প্রিমিয়াম বেস সাউন্ড<br>✓ iPhone & Android<br>✓ ১ বছর ওয়ারেন্টি","48% OFF","অডিও"],
+["TOKQI M01 Gimbal","৳ 6620","৳ 8500","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An-kFaiPnup6T1xDpC53VP3BW8YIFMpMgg-HeeAHkU_RzNIxJOSYMndAKvq81ViKP3ReIwhA6xYfBGJvKIpNeyGhdIRIGVrEatd93lPXnSyv.jpeg","✓ 3-Axis Stabilizer<br>✓ ভিডিও কাঁপবে না<br>✓ Object Tracking<br>✓ 12 ঘণ্টা ব্যাটারি<br>✓ Vlogging বেস্ট","22% OFF","ইলেকট্রনিক্স"],
+["Razer BlackShark V2","৳ 5990","৳ 7000","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An9mlgZHEPR4HGazHk1NDH-kKV4MiRi3sgjjScl-Gg1TuFckqGdViL2VQZDW3itvJAU82DWlyoPdM4ci8pXpMNsL1db6ynUV6yRetukhT9m-.jpeg","✓ THX 7.1 Surround<br>✓ নয়েজ ক্যান্সেলিং মাইক<br>✓ মেমোরি ফোম কুশন<br>✓ PC/PS/Xbox<br>✓ 2 বছর ওয়ারেন্টি","15% OFF","অডিও"],
+["S2000 Pro Max Watch","৳ 1600","৳ 2500","https://6a59347f116fd9eb0759f5a1.imgix.net/sandbox/An9m9ONtAqe-dOWGiJQi4w55IkcfN9dxz5lSZq3FgeYMdcbK20Q4p7rW0umjk-4gNsljzFlTIl9_rxiTZHzhWFLPwP7U3qIzMqu6bvdeDV7I.jpeg","✓ Apple Ultra লুক<br>✓ IP67 Waterproof<br>✓ Calling Feature<br>✓ Heart Rate Track<br>✓ 7 দিন ব্যাটারি","36% OFF","ওয়াচ"],
+["F11-2 Wireless Mic","৳ 1200","৳ 1800","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An8eeWTUCy4-tX22Uxkl2l7_UzXEnt6zgwIaX3qJwUbPeLv9yMM31UYUEJxV2Lfczz4IlpdAQMog_Uq2PmC3rzOcnP0Tnp6sB5Jh5-2tvmda.jpeg","✓ 20 মিটার ক্লিয়ার<br>✓ সব ফোনে চলবে<br>✓ নয়েজ ক্যান্সেল<br>✓ 6 ঘণ্টা ব্যাটারি<br>✓ YouTube বেস্ট","33% OFF","অডিও"],
+["Ultra S9 Watch","৳ 4350","৳ 5000","https://6a59347f116fd9eb0759f5a1.imgix.net/sandbox/An-OZFs3JKPqMnsrfQP8JMjzz9TXc8LpZpZAW9jJgjdCTcccQU11OdXvbTUCyfjdcL55mdHFXm72KR6gAUEds3L_ZIhlP7ogjMrhnytrogG1.jpeg","✓ Android সিম সাপোর্ট<br>✓ FB, WhatsApp<br>✓ 4G Calling<br>✓ Play Store<br>✓ 2GB RAM","13% OFF","ওয়াচ"],
+["Mini Massage Gun","৳ 999","৳ 1590","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An_hy9ekFJUbxyEKi5c5T91kJ_D1lZgKHeTi4YjYm0OVNQTWMmhpcU5q3Khq4QMaAVrQ37pfqX77ghoOFdDSAgF9Kx_uWjgZUhiJ6wVEMLrE.jpeg","✓ 5 মিনিটে রিলাক্স<br>✓ 4 হেড<br>✓ Type-C<br>✓ 1500mAh<br>✓ বাসা ও জিম","37% OFF","হেলথ"],
+["Waterproof Box","৳ 580","৳ 950","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/An-icOKukfinU7EdRjv2By7eW0seXGilrsDSnoJrAbXjHs0xJxahby7zfERnUpktVqueJ7r1lR9gp2KYvtcno2KrPrsFzhg5Vw3t8r4aHRws.jpeg","✓ 100% ওয়াটারপ্রুফ<br>✓ ফোন, টাকা রাখা যায়<br>✓ সুইমিং বেস্ট<br>✓ সিলিকন সিল<br>✓ টেকসই","39% OFF","এক্সেসরিজ"],
+["Memo CX07 Cooler","৳ 1180","৳ 1800","https://6a59347f116fd9eb0759f5a1.imgix.net/sandbox/618fed9d5c0614941620-wcb94evuuber0lvtfzmh.webp?max-w=6055","✓ 10° ঠান্ডা<br>✓ ল্যাগ 0<br>✓ RGB<br>✓ Type-C<br>✓ PUBG বেস্ট","34% OFF","গেমিং"],
+["5 in 1 Gaming Combo","৳ 1980","৳ 3000","https://6a4e5031ae4883bf378b8acd.imgix.net/sandbox/vywwq6mjycil9ferpdm6%20(1).webp","✓ কিবোর্ড+মাউস<br>✓ মাউসপ্যাড ফ্রি<br>✓ RGB 7 কালার<br>✓ গেমিং বেস্ট<br>✓ PC/Laptop","34% OFF","গেমিং"],
+["HY300 4K Projector","৳ 5000","৳ 7800","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.05.jpeg","✓ 120 ইঞ্চি 4K<br>✓ Android 11<br>✓ Auto Focus<br>✓ WiFi 6<br>✓ 2000 Lumens","36% OFF","ইলেকট্রনিক্স"],
+["Electric Screwdriver","৳ 1400","৳ 2340","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.06.jpeg","✓ রিচার্জেবল<br>✓ 28 বিট<br>✓ LED Light<br>✓ Type-C<br>✓ বাসার জন্য","40% OFF","টুলস"],
+["Tissot Premium Watch","৳ 1320","৳ 2190","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.50%20(2).jpeg","✓ প্রিমিয়াম লুক<br>✓ Stainless Steel<br>✓ Waterproof<br>✓ ওয়ারেন্টি<br>✓ গিফট বক্স","40% OFF","ওয়াচ"],
+["New Aura Arabic Watch","৳ 550","৳ 910","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.51.jpeg","✓ আরবি ডায়াল<br>✓ প্রিমিয়াম<br>✓ লাইটওয়েট<br>✓ স্টাইলিশ<br>✓ ছেলেদের জন্য","40% OFF","ওয়াচ"],
+["Polygonal Sunglasses","৳ 1000","৳ 1390","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.50.jpeg","✓ UV400<br>✓ Polygonal Design<br>✓ পোলারাইজড<br>✓ লাইটওয়েট<br>✓ ট্রেন্ডি","28% OFF","ফ্যাশন"],
+["Aura Matte Black","৳ 320","৳ 690","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.50%20(1).jpeg","✓ ম্যাট ব্ল্যাক<br>✓ UV Protection<br>✓ লাইটওয়েট<br>✓ স্টাইলিশ<br>✓ সবার জন্য","54% OFF","ফ্যাশন"],
+["Millionare Sunglass","৳ 1000","৳ 1590","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.49.jpeg","✓ সেলিব্রিটি লুক<br>✓ UV400<br>✓ প্রিমিয়াম মেটাল<br>✓ কেস ফ্রি<br>✓ গিফট বক্স","37% OFF","ফ্যাশন"],
+["Vintage Glasses","৳ 330","৳ 840","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.49%20(1).jpeg","✓ ভিন্টেজ ডিজাইন<br>✓ ট্রেন্ডি<br>✓ UV Protection<br>✓ হালকা<br>✓ ছেলে/মেয়ে","61% OFF","ফ্যাশন"],
+["Hand Fan","৳ 580","৳ 780","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.48.jpeg","✓ 3 স্পিড<br>✓ রিচার্জেবল<br>✓ 5 ঘণ্টা ব্যাটারি<br>✓ মিনি সাইজ<br>✓ টেবিল ফ্যান","26% OFF","হোম"],
+["Grape Peeler","৳ 1650","৳ 2099","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.52%20(1).jpeg","✓ আঙ্গুর খোসা ছাড়াবে<br>✓ স্টেইনলেস স্টিল<br>✓ হাত কাটবে না<br>✓ কিচেন বেস্ট<br>✓ টাইম সেভ","21% OFF","হোম"],
+["Turbo Fan","৳ 780","৳ 1300","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.44.48%20(2).jpeg","✓ মিনি সাইজ<br>✓ সুপার বাতাস<br>✓ Type-C<br>✓ 6 ঘণ্টা<br>✓ গরমের বেস্ট","40% OFF","হোম"],
+["Bubble Watch","৳ 999","৳ 1640","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.08%20(1).jpeg","✓ বাবল ডিজাইন<br>✓ পানি বের হয়<br>✓ বাচ্চাদের প্রিয়<br>✓ রিচার্জেবল<br>✓ গিফট বেস্ট","39% OFF","ওয়াচ"],
+["Data Cable Set","৳ 480","৳ 700","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.02%20(2).jpeg","✓ 4 in 1 ক্যাবল<br>✓ 65W ফাস্ট চার্জ<br>✓ iPhone/Type-C<br>✓ 1.2 মিটার<br>✓ টেকসই","31% OFF","এক্সেসরিজ"],
+["EQ34 Earbud","৳ 1020","৳ 1400","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.03%20(1).jpeg","✓ মিনি সাইজ<br>✓ 20 ঘণ্টা ব্যাটারি<br>✓ HD Sound<br>✓ Type-C<br>✓ গেমিং মোড","27% OFF","অডিও"],
+["Mecha Speaker","৳ 1220","৳ 2200","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.03.jpeg","✓ রোবট ডিজাইন<br>✓ RGB Light<br>✓ ব্লুটুথ 5.3<br>✓ 6 ঘণ্টা ব্যাটারি<br>✓ বেস সাউন্ড","45% OFF","অডিও"],
+["Neck Fan","৳ 780","৳ 1000","https://6a5204b06f6c51bd39012dab.imgix.net/sandbox/WhatsApp%20Image%202026-07-11%20at%2014.45.05%20(1).jpeg","✓ গলায় ঝুলে<br>✓ হাত ফ্রি<br>✓ 8 ঘণ্টা ব্যাটারি<br>✓ ঠান্ডা বাতাস<br>✓ গরমের বেস্ট","22% OFF","হোম"]
+];
+
+/* ---------- safe storage wrapper (survives private-mode / storage-disabled browsers) ---------- */
+const safeStorage={
+  get(key,fallback){ try{ const v=localStorage.getItem(key); return v===null?fallback:v; }catch(e){ return fallback; } },
+  set(key,val){ try{ localStorage.setItem(key,val); return true; }catch(e){ return false; } },
+  clear(){ try{ localStorage.clear(); }catch(e){} }
+};
+
+/* ---------- derived helpers ---------- */
+function num(s){return parseInt(String(s).replace(/[^\d]/g,''),10);}
+function discountPct(i){const p=num(data[i][1]),o=num(data[i][2]);return o>0?Math.round((1-p/o)*100):0;}
+function rating(i){return (4.3 + ((i*37)%7)/10).toFixed(1);}
+function soldRaw(i){return 150 + ((i*173)%1200);}
+function soldLabel(i){const n=soldRaw(i);return n>=1000?(n/1000).toFixed(1)+'k':n;}
+
+/* ---------- state ---------- */
+let cart=JSON.parse(safeStorage.get('gh_cart','{}'));
+let wishlist=new Set(JSON.parse(safeStorage.get('gh_wish','[]')));
+let activeCat="সব";
+let searchTerm="";
+let visibleCount=8;
+let wishTabActive=false;
+let deliveryZone=safeStorage.get('gh_zone','inside'); // inside | outside
+let searchDebounceTimer=null;
+
+function saveCart(){safeStorage.set('gh_cart',JSON.stringify(cart));}
+function saveWish(){safeStorage.set('gh_wish',JSON.stringify([...wishlist]));}
+
+/* ---------- categories ---------- */
+const cats=["সব",...new Set(data.map(p=>p[6]))];
+const catScroll=document.getElementById('catScroll');
+catScroll.innerHTML=cats.map(c=>`<div class="cat-chip ${c==='সব'?'active':''}" data-cat="${c}" onclick="setCategory('${c}')">${CAT_ICON[c]?CAT_ICON[c]+' ':''}${c}</div>`).join('');
+
+function setCategory(c){
+  activeCat=c; wishTabActive=false; visibleCount=8;
+  document.querySelectorAll('.cat-chip').forEach(el=>el.classList.toggle('active', el.dataset.cat===c));
+  renderGrid();
+}
+
+/* ---------- search (debounced for smoother typing on long lists) ---------- */
+function onSearch(){
+  clearTimeout(searchDebounceTimer);
+  const val=document.getElementById('searchInput').value.trim();
+  document.getElementById('searchClear').style.display = val ? 'flex':'none';
+  searchDebounceTimer=setTimeout(()=>{
+    searchTerm=val.toLowerCase();
+    visibleCount=8;
+    renderGrid();
+  },250);
+}
+function clearSearch(){
+  document.getElementById('searchInput').value='';
+  onSearch();
+}
+function resetFilters(){
+  activeCat="সব"; wishTabActive=false; searchTerm=""; visibleCount=8;
+  document.getElementById('searchInput').value='';
+  document.getElementById('searchClear').style.display='none';
+  document.getElementById('sortSelect').value='popular';
+  document.querySelectorAll('.cat-chip').forEach(el=>el.classList.toggle('active', el.dataset.cat==='সব'));
+  renderGrid();
+}
+
+/* ---------- filtering + sorting ---------- */
+function getFilteredIndices(){
+  let idx=data.map((_,i)=>i);
+  if(wishTabActive) idx=idx.filter(i=>wishlist.has(i));
+  if(activeCat!=="সব") idx=idx.filter(i=>data[i][6]===activeCat);
+  if(searchTerm) idx=idx.filter(i=>data[i][0].toLowerCase().includes(searchTerm)||data[i][6].toLowerCase().includes(searchTerm));
+  const sort=document.getElementById('sortSelect').value;
+  if(sort==='low') idx.sort((a,b)=>num(data[a][1])-num(data[b][1]));
+  else if(sort==='high') idx.sort((a,b)=>num(data[b][1])-num(data[a][1]));
+  else if(sort==='discount') idx.sort((a,b)=>discountPct(b)-discountPct(a));
+  else idx.sort((a,b)=>soldRaw(b)-soldRaw(a));
+  return idx;
+}
+
+/* ---------- render grid ---------- */
+function cardHTML(i){
+  const p=data[i];
+  const inWish=wishlist.has(i);
+  return `<div class="card">
+    <div class="offer-badge">${p[5]}</div>
+    <button class="wish-btn ${inWish?'active':''}" onclick="toggleWishlist(${i},event)" aria-label="ইচ্ছেতালিকায় যোগ করুন"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+    <div class="img-wrap loading" onclick="openP(${i},event)"><img src="${p[3]}" loading="lazy" alt="${p[0]}" onload="this.parentElement.classList.remove('loading')" onerror="this.parentElement.classList.remove('loading');this.src='https://via.placeholder.com/200?text=Gadget'"></div>
+    <div class="info">
+      <div class="title" onclick="openP(${i},event)">${p[0]}</div>
+      <div class="meta-row"><span class="star">★ ${rating(i)}</span><span>|</span><span>${soldLabel(i)} বিক্রিত</span></div>
+      <div class="price"><b>${p[1]}</b><s>${p[2]}</s></div>
+      <div class="card-actions">
+        <button class="btn-cart" onclick="addToCart(${i},1,event)" aria-label="কার্টে যোগ করুন">🛒</button>
+        <button class="btn-order" onclick="openP(${i},event)">অর্ডার করুন</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderGrid(){
+  const grid=document.getElementById('grid');
+  const idx=getFilteredIndices();
+  const show=idx.slice(0,visibleCount);
+  document.getElementById('resultCount').innerText = wishTabActive ? `ইচ্ছেতালিকা (${idx.length})` : `${idx.length} টি পণ্য পাওয়া গেছে`;
+  document.getElementById('resetFiltersBtn').style.display = (activeCat!=="সব"||searchTerm||wishTabActive) ? 'block':'none';
+  if(idx.length===0){
+    grid.innerHTML=`<div class="empty-state"><div>${wishTabActive?'💔':'🔍'}</div>${wishTabActive?'ইচ্ছেতালিকায় কিছু নেই':'কোনো পণ্য পাওয়া যায়নি'}<br><button onclick="resetFilters()">সব পণ্য দেখুন</button></div>`;
+    document.getElementById('loadMoreBtn').style.display='none';
+    return;
+  }
+  grid.innerHTML=show.map(i=>cardHTML(i)).join('');
+  document.getElementById('loadMoreBtn').style.display = visibleCount<idx.length ? 'block':'none';
+}
+function loadMore(){visibleCount+=8; renderGrid();}
+
+/* ---------- wishlist ---------- */
+function toggleWishlist(i,e){
+  if(e) e.stopPropagation();
+  if(wishlist.has(i)){wishlist.delete(i); toast('💔 ইচ্ছেতালিকা থেকে সরানো হয়েছে');}
+  else {wishlist.add(i); toast('❤️ ইচ্ছেতালিকায় যোগ হয়েছে');}
+  saveWish(); updateBadges(); renderGrid();
+}
+function openWishTab(){
+  wishTabActive=true; activeCat="সব"; visibleCount=8;
+  document.querySelectorAll('.cat-chip').forEach(el=>el.classList.toggle('active', el.dataset.cat==='সব'));
+  setActiveNav('navWish');
+  renderGrid();
+  window.scrollTo({top:document.querySelector('.cat-scroll').offsetTop-10,behavior:'smooth'});
+}
+
+/* ---------- cart ---------- */
+const MAX_QTY=10;
+function addToCart(i,qty,e){
+  if(e) e.stopPropagation();
+  cart[i]=Math.min(MAX_QTY,(cart[i]||0)+qty);
+  saveCart(); updateBadges();
+  toast('🛒 কার্টে যোগ হয়েছে');
+}
+function changeCartQty(i,delta){
+  cart[i]=Math.min(MAX_QTY,(cart[i]||0)+delta);
+  if(cart[i]<=0) delete cart[i];
+  saveCart(); updateBadges(); renderCartItems();
+}
+function removeFromCart(i){
+  delete cart[i]; saveCart(); updateBadges(); renderCartItems();
+}
+function cartSubtotal(){
+  return Object.entries(cart).reduce((sum,[i,q])=>sum+num(data[i][1])*q,0);
+}
+function deliveryFee(){
+  return Object.keys(cart).length===0 ? 0 : (deliveryZone==='inside'?DELIVERY_INSIDE:DELIVERY_OUTSIDE);
+}
+function cartCount(){
+  return Object.values(cart).reduce((a,b)=>a+b,0);
+}
+function setDeliveryZone(z){
+  deliveryZone=z; safeStorage.set('gh_zone',z); renderCartItems();
+}
+function renderCartItems(){
+  const box=document.getElementById('cartItemsBox');
+  const foot=document.getElementById('cartFoot');
+  const keys=Object.keys(cart);
+  if(keys.length===0){
+    box.innerHTML=`<div class="cart-empty"><div>🛒</div>কার্ট খালি আছে<br><small style="color:#94a3b8">পছন্দের পণ্য যোগ করুন</small></div>`;
+    foot.innerHTML='';
+    return;
+  }
+  box.innerHTML=keys.map(i=>{
+    const p=data[i];
+    return `<div class="cart-item">
+      <img src="${p[3]}" alt="${p[0]}" loading="lazy">
+      <div style="flex:1">
+        <div class="ci-title">${p[0]}</div>
+        <div class="ci-price">${p[1]}</div>
+        <div class="ci-qty">
+          <button onclick="changeCartQty(${i},-1)" aria-label="কমান">−</button>
+          <span>${cart[i]}</span>
+          <button onclick="changeCartQty(${i},1)" aria-label="বাড়ান">+</button>
+          <span class="ci-remove" onclick="removeFromCart(${i})">সরান</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  const sub=cartSubtotal(), fee=deliveryFee(), grand=sub+fee;
+  foot.innerHTML=`
+    <b style="font-size:12px;color:var(--muted)">ডেলিভারি এলাকা</b>
+    <div class="delivery-toggle">
+      <button class="${deliveryZone==='inside'?'active':''}" onclick="setDeliveryZone('inside')">ঢাকার ভিতরে (৳${DELIVERY_INSIDE})</button>
+      <button class="${deliveryZone==='outside'?'active':''}" onclick="setDeliveryZone('outside')">ঢাকার বাইরে (৳${DELIVERY_OUTSIDE})</button>
+    </div>
+    <div class="cart-total-row"><span>সাবটোটাল</span><span>৳ ${sub.toLocaleString('en-US')}</span></div>
+    <div class="cart-total-row"><span>ডেলিভারি চার্জ</span><span>৳ ${fee.toLocaleString('en-US')}</span></div>
+    <div class="cart-total-row grand"><span>সর্বমোট</span><b>৳ ${grand.toLocaleString('en-US')}</b></div>
+    <div class="order-btns">
+      <button class="wa" onclick="checkoutCart()">📱 WhatsApp</button>
+      <button class="mg" onclick="openMSG()">💬 Messenger</button>
+    </div>`;
+}
+function checkoutCart(){
+  const lines=Object.entries(cart).map(([i,q])=>`- ${data[i][0]} (${q} pcs) — ${data[i][1]}`).join('%0A');
+  const name=safeStorage.get('gh_name',''), phone=safeStorage.get('gh_phone',''), addr=safeStorage.get('gh_address','');
+  const sub=cartSubtotal(), fee=deliveryFee(), grand=sub+fee;
+  let customerLine='';
+  if(name||phone||addr){
+    customerLine=`%0A%0Aগ্রাহকের তথ্য:%0Aনাম: ${encodeURIComponent(name||'-')}%0Aফোন: ${encodeURIComponent(phone||'-')}%0Aঠিকানা: ${encodeURIComponent(addr||'-')}`;
+  }
+  const zoneLabel = deliveryZone==='inside' ? 'ঢাকার ভিতরে' : 'ঢাকার বাইরে';
+  const text=`Hello Gadget Hunter BD, আমি নিচের পণ্যগুলো অর্ডার করতে চাই:%0A${lines}%0A%0Aসাবটোটাল: ৳ ${sub.toLocaleString('en-US')}%0Aডেলিভারি (${zoneLabel}): ৳ ${fee.toLocaleString('en-US')}%0Aসর্বমোট: ৳ ${grand.toLocaleString('en-US')}${customerLine}`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${text}`,'_blank');
+}
+function openCart(){
+  document.getElementById('cartOverlay').classList.add('show');
+  document.getElementById('cartDrawer').classList.add('show');
+  lockScroll();
+  renderCartItems();
+}
+function closeCart(){
+  document.getElementById('cartOverlay').classList.remove('show');
+  document.getElementById('cartDrawer').classList.remove('show');
+  unlockScroll();
+}
+function updateBadges(){
+  const cc=cartCount(), wc=wishlist.size;
+  const cb=document.getElementById('cartBadge'), ncb=document.getElementById('navCartBadge');
+  const wb=document.getElementById('wishBadge'), nwb=document.getElementById('navWishBadge');
+  [cb,ncb].forEach(el=>{el.innerText=cc; el.style.display=cc>0?'flex':'none';});
+  [wb,nwb].forEach(el=>{el.innerText=wc; el.style.display=wc>0?'flex':'none';});
+  document.getElementById('pCartCount').innerText=cc+' টি';
+  document.getElementById('pWishCount').innerText=wc+' টি';
+}
+
+/* ---------- product detail popup ---------- */
+let popupQty=1;
+function openP(i, e){
+  popupQty=1;
+  const p=data[i];
+  const popup=document.getElementById('popupInner');
+  const overlay=document.getElementById('popupOverlay');
+
+  const card = e ? e.target.closest('.card') : null;
+  if(card){
+    const r = card.getBoundingClientRect();
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const ox = ((r.left + r.width/2) / vw * 100).toFixed(1) + '%';
+    const oy = ((r.top + r.height/2) / vh * 100).toFixed(1) + '%';
+    popup.style.transformOrigin = ox + ' ' + oy;
+  } else {
+    popup.style.transformOrigin = '50% 50%';
+  }
+
+  popup.innerHTML=`
+    <div class="close" onclick="closeP()" role="button" aria-label="বন্ধ করুন">✕</div>
+    <img src="${p[3]}" alt="${p[0]}" onerror="this.src='https://via.placeholder.com/200?text=Gadget'">
+    <h3>${p[0]}</h3>
+    <div class="meta-row"><span class="star">★ ${rating(i)}</span><span>|</span><span>${soldLabel(i)} বিক্রিত</span><span>|</span><span style="color:var(--rose);font-weight:800">${p[5]}</span></div>
+    <div class="price"><b>${p[1]}</b><s>${p[2]}</s></div>
+    <div class="details">${p[4]}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0;background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #eef2f7">
+      <b style="font-size:13px">পরিমাণ</b>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onclick="popQty(-1)" aria-label="কমান" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--navy);background:#fff;font-weight:800;cursor:pointer;font-size:14px">−</button>
+        <span id="popQtyVal" style="font-weight:800;min-width:16px;text-align:center">1</span>
+        <button onclick="popQty(1)" aria-label="বাড়ান" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--navy);background:#fff;font-weight:800;cursor:pointer;font-size:14px">+</button>
+        <button onclick="addToCart(${i},popupQty);closeP()" style="background:var(--navy);color:#fff;border:none;padding:8px 14px;border-radius:9px;font-weight:800;font-size:12px;cursor:pointer;margin-left:4px">🛒 কার্ট</button>
+      </div>
+    </div>
+    <div class="order-btns">
+      <button class="wa" onclick="openWA(${i})">📱 WhatsApp</button>
+      <button class="mg" onclick="openMSG()">💬 Messenger</button>
+    </div>
+  `;
+
+  popup.classList.remove('pop-anim');
+  void popup.offsetWidth;
+  popup.classList.add('pop-anim');
+
+  overlay.classList.add('show');
+  lockScroll();
+}
+function popQty(d){
+  popupQty=Math.max(1,Math.min(MAX_QTY,popupQty+d));
+  document.getElementById('popQtyVal').innerText=popupQty;
+}
+function closeP(){
+  const popup=document.getElementById('popupInner');
+  const overlay=document.getElementById('popupOverlay');
+  popup.style.animation='popZoomOut .2s cubic-bezier(.55,.06,.68,.19) forwards';
+  setTimeout(()=>{
+    overlay.classList.remove('show');
+    popup.style.animation='';
+    popup.classList.remove('pop-anim');
+    unlockScroll();
+  },190);
+}
+function openWA(i){
+  const p=data[i];
+  const text=`Hello Gadget Hunter BD, আমি ${p[0]} (${p[1]}) — ${popupQty} pcs অর্ডার করতে চাই।`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`,'_blank');
+}
+function openMSG(){window.open(MSG,'_blank');}
+
+function lockScroll(){
+  const app=document.getElementById('app');
+  window._sv = window.pageYOffset||document.documentElement.scrollTop||app.scrollTop||0;
+  document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
+}
+function unlockScroll(){
+  document.body.style.overflow='';
+  document.documentElement.style.overflow='';
+}
+
+/* ---------- toast (queue-limited so it can't stack forever) ---------- */
+let activeToasts=0;
+function toast(msg){
+  if(activeToasts>=3) return;
+  activeToasts++;
+  const box=document.getElementById('toastBox');
+  const t=document.createElement('div');
+  t.className='toast'; t.innerText=msg;
+  box.appendChild(t);
+  setTimeout(()=>{t.remove(); activeToasts--;},2500);
+}
+
+/* ---------- bottom nav ---------- */
+function setActiveNav(id){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goHome(){
+  wishTabActive=false; activeCat="সব"; visibleCount=8;
+  document.getElementById('searchInput').value=''; searchTerm='';
+  document.getElementById('searchClear').style.display='none';
+  document.querySelectorAll('.cat-chip').forEach(el=>el.classList.toggle('active', el.dataset.cat==='সব'));
+  setActiveNav('navHome');
+  window.scrollTo({top:0,behavior:'smooth'});
+  renderGrid();
+}
+function goCategories(){
+  setActiveNav('navCat');
+  document.querySelector('.cat-scroll').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ---------- stats counter ---------- */
+function runCounter(id, target){
+  var el=document.getElementById(id); var c=0; var step=target/60;
+  var t=setInterval(function(){ c+=step; if(c>=target){ el.innerText=target+'+'; clearInterval(t); } else{ el.innerText=Math.floor(c); } },25);
+}
+
+/* ---------- banner carousel ---------- */
+const bannerTrack=document.getElementById('bannerTrack');
+const slidesCount=bannerTrack.children.length;
+const dotsBox=document.getElementById('bannerDots');
+for(let d=0; d<slidesCount; d++){dotsBox.innerHTML+=`<span class="${d===0?'active':''}"></span>`;}
+let bannerIdx=0;
+let bannerTimer=null;
+function goToSlide(n){
+  bannerIdx=n%slidesCount;
+  bannerTrack.scrollTo({left:bannerTrack.clientWidth*bannerIdx,behavior:'smooth'});
+  [...dotsBox.children].forEach((el,k)=>el.classList.toggle('active',k===bannerIdx));
+}
+function startBannerAuto(){
+  clearInterval(bannerTimer);
+  bannerTimer=setInterval(()=>goToSlide(bannerIdx+1),4500);
+}
+startBannerAuto();
+bannerTrack.addEventListener('scroll',()=>{
+  const idx=Math.round(bannerTrack.scrollLeft/bannerTrack.clientWidth);
+  [...dotsBox.children].forEach((el,k)=>el.classList.toggle('active',k===idx));
+  bannerIdx=idx;
+});
+/* pause auto-rotate while user is interacting with the banner */
+['touchstart','pointerdown'].forEach(ev=>bannerTrack.addEventListener(ev,()=>clearInterval(bannerTimer)));
+['touchend','pointerup'].forEach(ev=>bannerTrack.addEventListener(ev,startBannerAuto));
+
+/* ---------- flash sale countdown (resets daily at midnight) ---------- */
+function updateFlashTimer(){
+  const now=new Date();
+  const end=new Date(now); end.setHours(24,0,0,0);
+  let diff=Math.max(0,end-now);
+  const h=String(Math.floor(diff/3600000)).padStart(2,'0');
+  const m=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  const s=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  const el=document.getElementById('flashTimer');
+  if(el) el.innerText=`⏳ ${h}:${m}:${s}`;
+}
+setInterval(updateFlashTimer,1000);
+
+/* ---------- profile ---------- */
+function isValidBDPhone(v){
+  return /^01[3-9]\d{8}$/.test(v.replace(/\s|-/g,''));
+}
+function openProfile(){
+  lockScroll();
+  let box=document.getElementById('profileBox');
+  box.style.display='block'; box.scrollTop=0;
+  document.getElementById('pName').innerText = safeStorage.get('gh_name','Guest User');
+  document.getElementById('pPhone').innerText = safeStorage.get('gh_phone','01xxxxxxxxx');
+  document.getElementById('editName').value = safeStorage.get('gh_name','');
+  document.getElementById('editPhone').value = safeStorage.get('gh_phone','');
+  document.getElementById('editEmail').value = safeStorage.get('gh_email','');
+  document.getElementById('editAddress').value = safeStorage.get('gh_address','');
+  document.getElementById('pDefaultAddr').innerText = safeStorage.get('gh_address','সেট করা হয়নি');
+  document.getElementById('pJoin').innerText = safeStorage.get('gh_join','2026');
+  document.getElementById('phoneErr').style.display='none';
+  document.getElementById('editPhone').classList.remove('err');
+  updateBadges();
+}
+function closeProfile(){
+  document.getElementById('profileBox').style.display='none';
+  unlockScroll();
+}
+function saveProfile(){
+  var n=document.getElementById('editName').value.trim();
+  if(!n){toast('⚠️ নাম লিখুন');return;}
+  var phoneEl=document.getElementById('editPhone');
+  var phone=phoneEl.value.trim();
+  if(phone && !isValidBDPhone(phone)){
+    phoneEl.classList.add('err');
+    document.getElementById('phoneErr').style.display='block';
+    toast('⚠️ সঠিক ফোন নাম্বার দিন');
+    return;
+  }
+  phoneEl.classList.remove('err');
+  document.getElementById('phoneErr').style.display='none';
+  safeStorage.set('gh_name',n);
+  safeStorage.set('gh_phone',phone);
+  safeStorage.set('gh_email',document.getElementById('editEmail').value.trim());
+  safeStorage.set('gh_address',document.getElementById('editAddress').value.trim());
+  if(!safeStorage.get('gh_join',null)) safeStorage.set('gh_join', new Date().getFullYear());
+  toast('✅ প্রোফাইল সেভ হয়েছে'); openProfile();
+}
+function clearProfile(){ if(confirm('লগআউট করবেন?')){ safeStorage.clear(); cart={}; wishlist=new Set(); updateBadges(); closeProfile(); goHome(); } }
+
+/* ---------- header shrink + scroll-to-top on scroll ---------- */
+function onAppScroll(){
+  const y=getScroll();
+  const header=document.getElementById('topHeader');
+  const toTop=document.getElementById('toTopBtn');
+  if(header) header.classList.toggle('compact', y>60);
+  if(toTop) toTop.classList.toggle('show', y>500);
+}
+function scrollToTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+  const app=document.getElementById('app'); if(app) app.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- viewport sync (Google Sites iframe fix) ----------
+   Google Sites embeds our page in an iframe. Inside an iframe,
+   window.scrollY is always 0 and position:fixed attaches to the
+   document bottom instead of the visible screen.
+   Solution: read the REAL scroll from every possible source,
+   then pin each overlay to the current visible viewport every frame. */
+(function(){
+  const elTop   = []; // full-screen overlays (popup, cart, profile)
+  const elBottom= []; // stick-to-bottom elements (nav, toast, to-top)
+
+  function collect(){
+    elTop.length=0; elBottom.length=0;
+    ['popupOverlay','cartOverlay','cartDrawer','profileBox'].forEach(id=>{
+      const el=document.getElementById(id); if(el) elTop.push(el);
+    });
+    document.querySelectorAll('.bottom-nav').forEach(el=>elBottom.push(el));
+    const tb=document.getElementById('toastBox'); if(tb) elBottom.push(tb);
+  }
+
+  window.getScroll=function(){
+    if(window.pageYOffset) return window.pageYOffset;
+    if(document.documentElement.scrollTop) return document.documentElement.scrollTop;
+    if(document.body.scrollTop) return document.body.scrollTop;
+    try{
+      let el=document.body;
+      while(el){
+        if(el.scrollTop>0) return el.scrollTop;
+        el=el.parentElement;
+      }
+      if(window.parent && window.parent!==window)
+        return window.parent.pageYOffset||window.parent.scrollY||0;
+    }catch(e){}
+    return 0;
+  };
+
+  function sync(){
+    const y   = getScroll();
+    const vh  = window.innerHeight;
+    const vw  = window.innerWidth;
+
+    elTop.forEach(el=>{
+      el.style.top    = y + 'px';
+      el.style.height = vh + 'px';
+      el.style.width  = vw + 'px';
+    });
+    elBottom.forEach(el=>{
+      el.style.top   = (y + vh - el.offsetHeight) + 'px';
+      el.style.left  = '0';
+      el.style.right = '0';
+    });
+    const toTop=document.getElementById('toTopBtn');
+    if(toTop){
+      toTop.style.top = (y + vh - 150) + 'px';
+      toTop.style.right = '16px';
+      toTop.style.left = 'auto';
+    }
+    onAppScroll();
+    requestAnimationFrame(sync);
+  }
+
+  collect();
+  requestAnimationFrame(sync);
+  window.addEventListener('resize', collect);
+  window.addEventListener('orientationchange', collect);
+  ['scroll','touchmove'].forEach(ev=>{
+    window.addEventListener(ev, sync, {passive:true});
+    document.addEventListener(ev, sync, {passive:true});
+  });
+})();
+
+/* ---------- init ---------- */
+renderGrid();
+updateBadges();
+updateFlashTimer();
+setTimeout(function(){ runCounter('count1',1000); runCounter('count2',385); runCounter('count3',300); },500);
+</script>
+</body>
+</html>
