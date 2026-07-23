@@ -1,52 +1,113 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gadget Hunter BD</title>
-  <style>
-    body{
-      margin:0;
-      font-family:Arial,sans-serif;
-      background:#f4f4f4;
-      text-align:center;
-    }
-    header{
-      background:#0f172a;
-      color:white;
-      padding:20px;
-    }
-    .box{
-      margin:30px;
-      background:white;
-      padding:20px;
-      border-radius:12px;
-      box-shadow:0 4px 10px rgba(0,0,0,.1);
-    }
-    .btn{
-      display:inline-block;
-      margin-top:20px;
-      padding:12px 20px;
-      background:#25D366;
-      color:white;
-      text-decoration:none;
-      border-radius:8px;
-      font-weight:bold;
-    }
-  </style>
-</head>
-<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-<header>
-  <h1>📱 Gadget Hunter BD</h1>
-  <p>বাংলাদেশের বিশ্বস্ত গ্যাজেট শপ</p>
-</header>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<div class="box">
-  <h2>স্বাগতম!</h2>
-  <p>আমাদের সম্পূর্ণ ই-কমার্স ওয়েবসাইট তৈরি হচ্ছে।</p>
-  <a class="btn" href="#">Shop Now</a>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#f5f7fb;
+overflow-x:hidden;
+}
+<header class="header">
+
+<div class="logo">
+
+<img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+
+<div>
+
+<h2>Gadget Hunter BD</h2>
+
+<p>Premium Gadget Store</p>
+
 </div>
 
-</body>
-</html>
+</div>
+
+<nav>
+
+<a href="#products">Products</a>
+
+<a href="#">Offers</a>
+
+<a href="#">Contact</a>
+
+</nav>
+
+</header>
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 25px;
+
+background:white;
+
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
+}
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
+
+.logo img{
+
+width:50px;
+
+}
+
+.logo h2{
+
+font-size:22px;
+
+}
+
+.logo p{
+
+font-size:12px;
+
+color:#666;
+
+}
+
+nav{
+
+display:flex;
+
+gap:20px;
+
+}
+
+nav a{
+
+text-decoration:none;
+
+font-weight:600;
+
+color:#333;
+
+}
